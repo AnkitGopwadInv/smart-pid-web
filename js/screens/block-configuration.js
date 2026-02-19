@@ -11,6 +11,8 @@ import { mockDataService } from '../services/mock-data-service.js';
 import { matchingService } from '../services/matching-service.js';
 import { coordinateMapper } from '../services/coordinate-mapper.js';
 import { eventBus } from '../services/event-bus.js';
+import { createPanelResizer } from '../utils/panel-resizer.js';
+import { DocumentViewer } from '../components/document-viewer.js';
 
 export class BlockConfigurationScreen extends BaseScreen {
   constructor() {
@@ -24,6 +26,8 @@ export class BlockConfigurationScreen extends BaseScreen {
     this._mappedItems = [];
     this._highlightedItemId = null;
     this._saveConfirmTimer = null;
+    this._rightPanelResizer = null;
+    this._viewer = null;
   }
 
   render() {
@@ -120,6 +124,21 @@ export class BlockConfigurationScreen extends BaseScreen {
     this._restoreSavedSelections();
     if (this._sheets.length > 0) {
       this._selectSheet(0);
+    }
+
+    // Set up right panel resizer
+    const rightPanel = this._container?.querySelector('.block-config-right');
+    if (rightPanel) {
+      this._rightPanelResizer = createPanelResizer({
+        panel: rightPanel,
+        edge: 'left',
+        minWidth: 120,
+        maxWidth: 500,
+        collapseThreshold: 80,
+        collapsedClass: 'block-config-right-collapsed',
+        defaultWidth: rightPanel.offsetWidth || 300,
+        onResize: () => {}
+      });
     }
   }
 
@@ -237,17 +256,16 @@ export class BlockConfigurationScreen extends BaseScreen {
   _renderViewer() {
     this._viewerContainer.innerHTML = '';
 
-    const wrapper = el('div', {
-      style: { position: 'relative', width: '100%', height: '100%', overflow: 'auto' }
+    // Build content: image + checkbox overlay
+    const content = el('div', {
+      style: { position: 'relative', display: 'inline-block' }
     });
 
-    // Use real sheet image
     const img = document.createElement('img');
     img.src = `assets/images/sheet-${this._blockId}.png`;
     img.style.display = 'block';
     img.alt = `${this._blockName} - ${this._sheets[this._selectedSheetIdx]?.displayName || ''}`;
 
-    // Checkbox overlay
     this._checkboxOverlay = el('div', {
       style: { position: 'absolute', top: '0', left: '0', pointerEvents: 'none' }
     });
@@ -266,8 +284,12 @@ export class BlockConfigurationScreen extends BaseScreen {
       setupOverlay(img.naturalWidth, img.naturalHeight);
     }
 
-    wrapper.append(img, this._checkboxOverlay);
-    this._viewerContainer.appendChild(wrapper);
+    content.append(img, this._checkboxOverlay);
+
+    // Wrap in DocumentViewer for zoom/pan
+    this._viewer = new DocumentViewer();
+    const viewerEl = this._viewer.create({ content });
+    this._viewerContainer.appendChild(viewerEl);
   }
 
   _renderCheckboxOverlay(docWidth, docHeight) {
@@ -357,6 +379,10 @@ export class BlockConfigurationScreen extends BaseScreen {
     const img = this._viewerContainer.querySelector('img');
     if (img && img.naturalWidth > 0) {
       this._renderCheckboxOverlay(img.naturalWidth, img.naturalHeight);
+      // Re-apply zoom transform on the overlay after re-render
+      if (this._viewer) {
+        this._viewer.refreshZoom();
+      }
     }
     this._updateSummary();
   }

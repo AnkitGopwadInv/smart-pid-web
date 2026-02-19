@@ -1,4 +1,4 @@
-/* Screen 1: Division Selection */
+/* Screen 1: Division Selection - ESP Theme */
 
 .division-grid {
   display: grid;
@@ -8,25 +8,29 @@
 }
 
 .division-card {
-  background: var(--bg-secondary);
+  background: var(--card-bg);
   border: 2px solid var(--border-default);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   padding: var(--space-lg);
   cursor: pointer;
   transition: all var(--transition-normal);
+  position: relative;
 }
 
 .division-card:hover {
-  border-color: var(--accent-primary);
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .division-card.selected {
-  border-color: var(--accent-primary);
-  background: var(--bg-selected);
+  border-color: var(--accent-color);
+  background: linear-gradient(135deg, var(--accent-light) 0%, #f0fdfa 100%);
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.15);
 }
 
 .division-card:focus-visible {
-  border-color: var(--accent-primary);
+  border-color: var(--accent-color);
   outline: none;
 }
 
@@ -66,7 +70,7 @@
 }
 
 .division-card-footer .count {
-  color: var(--accent-primary);
+  color: var(--accent-color);
   font-weight: 600;
 }
 

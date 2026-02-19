@@ -1,18 +1,20 @@
-/* Button Styles */
+/* Button Styles - ESP Theme */
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
-  padding: 8px 16px;
-  font-size: var(--font-size-sm);
+  padding: 12px 24px;
+  font-size: var(--font-size-md);
   font-weight: 600;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
   cursor: pointer;
   border: 2px solid transparent;
   white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .btn:disabled {
@@ -20,74 +22,83 @@
   cursor: not-allowed;
 }
 
-/* Primary Button (Blue) */
+/* Primary Button (Navy Gradient) */
 .btn-primary {
-  background: var(--accent-primary);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
   color: white;
+  box-shadow: 0 2px 4px rgba(30, 58, 95, 0.3);
 }
 .btn-primary:hover:not(:disabled) {
-  background: var(--accent-hover);
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-color) 100%);
+  box-shadow: 0 4px 8px rgba(30, 58, 95, 0.4);
+  transform: translateY(-1px);
 }
 .btn-primary:active:not(:disabled) {
-  background: var(--accent-pressed);
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(30, 58, 95, 0.3);
 }
 
-/* Secondary Button (Outline) */
+/* Secondary Button (White with border) */
 .btn-secondary {
-  background: transparent;
-  color: var(--accent-primary);
-  border: 1px solid var(--accent-primary);
+  background: white;
+  color: var(--text-primary);
+  border: 2px solid var(--border-default);
 }
 .btn-secondary:hover:not(:disabled) {
-  background: var(--accent-bg-hover);
+  background: var(--bg-primary);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 .btn-secondary:active:not(:disabled) {
-  background: var(--accent-bg-pressed);
+  background: var(--bg-tertiary);
 }
 
-/* Success Button (Green) */
+/* Success Button (Green Gradient) */
 .btn-success {
-  background: var(--btn-success-bg);
-  color: var(--btn-success-fg);
-  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
 }
 .btn-success:hover:not(:disabled) {
-  background: var(--btn-success-hover);
+  box-shadow: 0 4px 8px rgba(5, 150, 105, 0.4);
+  transform: translateY(-1px);
 }
 .btn-success:active:not(:disabled) {
-  background: #4AA840;
+  transform: translateY(0);
 }
 .btn-success:disabled {
   background: var(--btn-disabled-bg);
   color: var(--btn-disabled-fg);
+  box-shadow: none;
 }
 
-/* Start Over Button (Red outline) */
+/* Start Over Button (Red Gradient) */
 .btn-startover {
-  background: transparent;
-  color: var(--btn-startover-fg);
-  border: 1px solid var(--btn-startover-border);
-  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3);
 }
 .btn-startover:hover:not(:disabled) {
-  background: var(--btn-startover-hover-bg);
+  background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
+  box-shadow: 0 4px 8px rgba(220, 38, 38, 0.4);
+  transform: translateY(-1px);
 }
 .btn-startover:active:not(:disabled) {
-  background: #FCE4EC;
+  transform: translateY(0);
 }
 
 /* Badge */
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
-  border-radius: var(--radius-md);
+  padding: 3px 10px;
+  border-radius: 20px;
   font-size: var(--font-size-xs);
   font-weight: 600;
 }
 .badge-mandatory {
-  background: var(--badge-mandatory-bg);
-  color: var(--badge-mandatory-fg);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: white;
 }
 .badge-done {
   background: var(--badge-done-bg);
@@ -98,9 +109,9 @@
   color: var(--badge-pending-fg);
 }
 .badge-required {
-  background: rgba(108, 203, 95, 0.18);
-  color: #6CCB5F;
-  padding: 4px 8px;
+  background: rgba(5, 150, 105, 0.15);
+  color: #059669;
+  padding: 4px 10px;
 }
 
 /* Breadcrumb */
@@ -115,13 +126,13 @@
   color: var(--text-muted);
 }
 .breadcrumb-item.active {
-  color: var(--accent-primary);
+  color: var(--accent-color);
 }
 .breadcrumb-item.clickable {
   cursor: pointer;
 }
 .breadcrumb-item.clickable:hover {
-  color: var(--accent-primary);
+  color: var(--accent-color);
   text-decoration: underline;
 }
 .breadcrumb-separator {
@@ -165,8 +176,8 @@
 
 /* Error panel */
 .error-panel {
-  background: var(--bg-secondary);
-  border: 1px solid #E53935;
+  background: var(--bg-error);
+  border: 1px solid var(--status-error);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   margin-bottom: var(--space-md);
@@ -175,7 +186,7 @@
   gap: 12px;
 }
 .error-panel-icon { font-size: 20px; }
-.error-panel-text { color: #E53935; font-size: var(--font-size-md); }
+.error-panel-text { color: var(--status-error); font-size: var(--font-size-md); }
 
 /* Empty state */
 .empty-state {

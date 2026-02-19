@@ -149,17 +149,16 @@ export class MainHubScreen extends BaseScreen {
   _renderPfdDiagram() {
     this._viewerContainer.innerHTML = '';
 
-    const wrapper = el('div', {
-      style: { position: 'relative', width: '100%', height: '100%', overflow: 'auto' }
+    // Build content: image + overlay (will be placed inside DocumentViewer inner)
+    const content = el('div', {
+      style: { position: 'relative', display: 'inline-block' }
     });
 
-    // Use real PFD image
     const img = document.createElement('img');
     img.src = 'assets/images/pfd-bidrum-boilers.png';
     img.style.display = 'block';
     img.alt = 'PFD - Bidrum Boilers';
 
-    // Overlay configure buttons (created after image loads to get dimensions)
     const overlay = el('div', {
       style: { position: 'absolute', top: '0', left: '0', pointerEvents: 'none' }
     });
@@ -200,13 +199,16 @@ export class MainHubScreen extends BaseScreen {
       addButtons(img.naturalWidth, img.naturalHeight);
     };
 
-    // Fallback if image is cached and already loaded
     if (img.complete && img.naturalWidth > 0) {
       addButtons(img.naturalWidth, img.naturalHeight);
     }
 
-    wrapper.append(img, overlay);
-    this._viewerContainer.appendChild(wrapper);
+    content.append(img, overlay);
+
+    // Wrap in DocumentViewer for zoom/pan
+    this._viewer = new DocumentViewer();
+    const viewerEl = this._viewer.create({ content });
+    this._viewerContainer.appendChild(viewerEl);
   }
 
   _onConfigureBlock(blockId) {

@@ -1,4 +1,4 @@
-/* Screen 5: Block Configuration */
+/* Screen 5: Block Configuration - ESP Theme */
 
 .block-config {
   padding: var(--space-xl);
@@ -55,8 +55,7 @@
 
 /* Split panel */
 .block-config-split {
-  display: grid;
-  grid-template-columns: 7fr 3fr;
+  display: flex;
   gap: var(--space-md);
   flex: 1;
   min-height: 0;
@@ -65,17 +64,20 @@
 
 /* Left panel: tabs + document */
 .block-config-left {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-xl);
+  flex: 1;
+  min-width: 0;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--border-light);
 }
 
-/* Sheet tabs */
+/* Sheet tabs - ESP accordion style */
 .sheet-tabs {
   display: flex;
-  background: var(--bg-secondary);
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   border-bottom: 1px solid var(--border-default);
   padding: 0 var(--space-sm);
   flex-shrink: 0;
@@ -92,15 +94,18 @@
   position: relative;
   transition: all var(--transition-fast);
   margin-right: 4px;
+  border-left: 3px solid transparent;
 }
 
 .sheet-tab:hover {
   background: var(--tab-hover-bg);
+  border-left-color: var(--accent-color);
 }
 
 .sheet-tab.active {
-  color: var(--text-primary);
-  background: var(--tab-active-bg);
+  color: var(--accent-hover);
+  background: var(--accent-light);
+  font-weight: 600;
 }
 
 .sheet-tab.active::after {
@@ -110,7 +115,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--tab-active-border);
+  background: var(--accent-color);
 }
 
 .sheet-tab:focus-visible {
@@ -122,19 +127,25 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
-}
-
-/* Right panel: selection list */
-.block-config-right {
-  background: var(--bg-secondary);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
+/* Right panel: selection list */
+.block-config-right {
+  width: 300px;
+  min-width: 300px;
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-light);
+}
+
 .selection-panel-header {
-  background: var(--bg-primary);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
   border-bottom: 1px solid var(--border-light);
   padding: 16px 20px;
   flex-shrink: 0;
@@ -143,13 +154,13 @@
 .selection-panel-title {
   font-size: var(--font-size-xl);
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text-inverse);
   margin-bottom: 4px;
 }
 
 .selection-panel-count {
   font-size: var(--font-size-base);
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .selection-list {
@@ -164,7 +175,7 @@
   padding: 10px 12px;
   border-bottom: 1px solid var(--border-light);
   cursor: pointer;
-  transition: background var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
 .selection-item:hover {
@@ -173,8 +184,7 @@
 
 .selection-item.highlighted {
   background: var(--bg-selected);
-  border-bottom-color: var(--accent-primary);
-  border-bottom-width: 2px;
+  border-left: 3px solid var(--accent-color);
 }
 
 .selection-item-checkbox {
@@ -237,7 +247,7 @@
 }
 
 .save-confirmation {
-  color: #6CCB5F;
+  color: #059669;
   font-size: var(--font-size-base);
   opacity: 0;
   transition: opacity var(--transition-normal);
@@ -252,4 +262,30 @@
   align-items: center;
   gap: 12px;
   margin-left: auto;
+}
+
+/* Right panel collapsed state */
+.block-config-right-collapsed {
+  width: 42px !important;
+  min-width: 42px !important;
+}
+
+.block-config-right-collapsed .selection-panel-header,
+.block-config-right-collapsed .selection-list,
+.block-config-right-collapsed .selection-panel-summary {
+  display: none;
+}
+
+.block-config-right-collapsed::after {
+  content: 'Item Selection';
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
 }

@@ -1,116 +1,130 @@
 /* Smart P&ID Web - CSS Custom Properties
-   Mapped from Views/Resources/Colors.xaml and Styles.xaml */
+   ESP Configuration UI Theme */
 
 :root {
-  /* Background Colors (Light Theme) */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F5F5F5;
-  --bg-tertiary: #E8E8E8;
-  --bg-document: #E8E8E8;
+  /* Primary - Deep Navy Blue */
+  --primary-color: #1e3a5f;
+  --primary-hover: #152a45;
+  --primary-light: #2d4a6f;
+
+  /* Accent - Teal */
+  --accent-color: #0891b2;
+  --accent-hover: #0e7490;
+  --accent-light: #ecfeff;
+
+  /* Background Colors */
+  --bg-primary: #f3f4f6;
+  --bg-secondary: #f3f4f6;
+  --bg-tertiary: #e5e7eb;
+  --bg-document: #e5e7eb;
+  --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  --card-bg: #ffffff;
+  --header-bg: linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%);
 
   /* Text Colors */
-  --text-primary: #1E1E1E;
-  --text-secondary: #6E6E6E;
-  --text-muted: #808080;
-  --text-disabled: #A0A0A0;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --text-disabled: #9ca3af;
+  --text-inverse: #ffffff;
 
-  /* Accent Colors */
-  --accent-primary: #0078D4;
-  --accent-hover: #1A86D9;
-  --accent-pressed: #005A9E;
-  --accent-green: #6CCB5F;
-  --accent-orange: #F4A261;
-  --accent-red: #F44336;
+  /* Accent Colors (legacy mappings) */
+  --accent-primary: #1e3a5f;
+  --accent-hover: #152a45;
+  --accent-pressed: #152a45;
+  --accent-green: #059669;
+  --accent-orange: #d97706;
+  --accent-red: #dc2626;
 
   /* Border Colors */
-  --border-default: #CCCCCC;
-  --border-light: #E0E0E0;
-  --border-focus: #0078D4;
+  --border-default: #d1d5db;
+  --border-light: #e5e7eb;
+  --border-focus: #0891b2;
 
   /* Status Colors */
-  --status-success: #6CCB5F;
-  --status-error: #F44336;
-  --status-warning: #F4A261;
+  --status-success: #059669;
+  --status-error: #dc2626;
+  --status-warning: #d97706;
 
   /* Status Backgrounds */
-  --bg-error: #FDF3F1;
-  --bg-success: #F1FAF1;
-  --bg-warning: #FFF8E5;
+  --bg-error: #fee2e2;
+  --bg-success: #d1fae5;
+  --bg-warning: #fef3c7;
 
   /* Checkbox Colors */
-  --checkbox-selected: #6CCB5F;
-  --checkbox-mandatory: #4FC3F7;
-  --checkbox-unselected: #888888;
+  --checkbox-selected: #059669;
+  --checkbox-mandatory: #0891b2;
+  --checkbox-unselected: #9ca3af;
 
   /* Radio Button Colors */
-  --radio-border: #CCCCCC;
-  --radio-selected: #0078D4;
-  --radio-fill: #0078D4;
+  --radio-border: #d1d5db;
+  --radio-selected: #0891b2;
+  --radio-fill: #0891b2;
 
   /* Sidebar Navigation */
-  --sidebar-bg: #F5F5F5;
-  --sidebar-border: #E0E0E0;
-  --sidebar-title: #808080;
-  --sidebar-item-hover: #E8E8E8;
-  --sidebar-item-active: #E6F2FF;
-  --sidebar-number-bg: #E8E8E8;
-  --sidebar-number-completed: #6CCB5F;
-  --sidebar-number-active: #0078D4;
-  --sidebar-check: #6CCB5F;
+  --sidebar-bg: #ffffff;
+  --sidebar-border: #e5e7eb;
+  --sidebar-title: #ffffff;
+  --sidebar-item-hover: #e5e7eb;
+  --sidebar-item-active: #ecfeff;
+  --sidebar-number-bg: #d1d5db;
+  --sidebar-number-completed: #059669;
+  --sidebar-number-active: #0891b2;
+  --sidebar-check: #059669;
 
   /* Tab Colors */
-  --tab-active-border: #0078D4;
-  --tab-inactive-text: #6E6E6E;
-  --tab-hover-bg: #F0F0F0;
-  --tab-active-bg: #0078D4;
+  --tab-active-border: #0891b2;
+  --tab-inactive-text: #4b5563;
+  --tab-hover-bg: #f3f4f6;
+  --tab-active-bg: #ecfeff;
 
   /* Card/Selection Colors */
-  --bg-selected: #E6F2FF;
-  --bg-hover: #F0F0F0;
+  --bg-selected: #ecfeff;
+  --bg-hover: #f3f4f6;
 
   /* Button States */
-  --accent-bg-hover: #F0F0F0;
-  --accent-bg-pressed: #E0E0E0;
+  --accent-bg-hover: #f3f4f6;
+  --accent-bg-pressed: #e5e7eb;
 
   /* Button Success */
-  --btn-success-bg: #6CCB5F;
-  --btn-success-hover: #5AB850;
+  --btn-success-bg: #059669;
+  --btn-success-hover: #047857;
   --btn-success-fg: #FFFFFF;
 
   /* Button Secondary */
-  --btn-secondary-bg: #F5F5F5;
-  --btn-secondary-border: #CCCCCC;
-  --btn-secondary-fg: #1E1E1E;
-  --btn-secondary-hover-bg: #E8E8E8;
-  --btn-secondary-hover-border: #0078D4;
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-border: #d1d5db;
+  --btn-secondary-fg: #111827;
+  --btn-secondary-hover-bg: #f3f4f6;
+  --btn-secondary-hover-border: #1e3a5f;
 
   /* Button Disabled */
-  --btn-disabled-bg: #E8E8E8;
-  --btn-disabled-fg: #A0A0A0;
+  --btn-disabled-bg: #e5e7eb;
+  --btn-disabled-fg: #9ca3af;
 
   /* Start Over Button */
-  --btn-startover-border: #F44336;
-  --btn-startover-fg: #F44336;
-  --btn-startover-hover-bg: #FDF3F1;
+  --btn-startover-border: #dc2626;
+  --btn-startover-fg: #dc2626;
+  --btn-startover-hover-bg: #fee2e2;
 
   /* Progress Bar */
-  --progress-bg: #E8E8E8;
-  --progress-fill-start: #0078D4;
-  --progress-fill-end: #6CCB5F;
+  --progress-bg: #d1d5db;
+  --progress-fill-start: #1e3a5f;
+  --progress-fill-end: #0891b2;
 
   /* Badge Colors */
-  --badge-done-bg: #F1FAF1;
-  --badge-done-fg: #6CCB5F;
-  --badge-pending-bg: #FFF8E5;
-  --badge-pending-fg: #F4A261;
-  --badge-mandatory-bg: #E6F7FF;
-  --badge-mandatory-fg: #4FC3F7;
+  --badge-done-bg: #d1fae5;
+  --badge-done-fg: #059669;
+  --badge-pending-bg: #fef3c7;
+  --badge-pending-fg: #d97706;
+  --badge-mandatory-bg: #ecfeff;
+  --badge-mandatory-fg: #0891b2;
 
   /* Icon Colors */
-  --icon-factory: #0078D4;
-  --icon-leaf: #6CCB5F;
-  --icon-water: #4FC3F7;
-  --icon-default: #0078D4;
+  --icon-factory: #1e3a5f;
+  --icon-leaf: #059669;
+  --icon-water: #0891b2;
+  --icon-default: #1e3a5f;
 
   /* Spacing System (8px Grid) */
   --space-xs: 4px;
@@ -120,7 +134,7 @@
   --space-xl: 32px;
 
   /* Typography */
-  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
   --font-size-xs: 11px;
   --font-size-sm: 12px;
   --font-size-base: 13px;
@@ -132,18 +146,20 @@
   --font-size-4xl: 28px;
 
   /* Border Radii */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 10px;
 
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-normal: 200ms ease;
   --transition-slow: 300ms ease;
+  --transition: all 0.2s ease;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-  --shadow-md: 0 2px 6px rgba(0,0,0,0.15);
-  --shadow-lg: 0 4px 12px rgba(0,0,0,0.2);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
 }

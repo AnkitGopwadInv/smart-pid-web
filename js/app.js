@@ -19,12 +19,14 @@ class App {
     this._currentScreen = null;
     this._contentEl = null;
     this._statusEl = null;
+    this._progressFill = null;
   }
 
   async init() {
     // Get DOM elements
     this._contentEl = document.getElementById('content');
     this._statusEl = document.getElementById('status-text');
+    this._progressFill = document.getElementById('progress-fill');
 
     // Render sidebar
     const sidebarEl = document.getElementById('sidebar');
@@ -81,6 +83,20 @@ class App {
       [Screen.BlockConfiguration]: 'Step 5: Block Configuration'
     };
     this._setStatus(screenNames[screen] || screen);
+
+    // Update progress bar
+    const screenOrder = [
+      Screen.DivisionSelection,
+      Screen.ProductSelection,
+      Screen.PfdBlockSelection,
+      Screen.MainHub,
+      Screen.BlockConfiguration
+    ];
+    const idx = screenOrder.indexOf(screen);
+    const progressPercent = ((idx + 1) / screenOrder.length) * 100;
+    if (this._progressFill) {
+      this._progressFill.style.width = `${progressPercent}%`;
+    }
   }
 
   _setStatus(text) {

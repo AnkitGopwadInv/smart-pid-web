@@ -21,16 +21,32 @@
   <script type="module" src="js/app.js"></script>
 </head>
 <body>
-  <div id="app">
-    <!-- Main content with sidebar -->
-    <div class="app-main">
-      <aside id="sidebar" class="app-sidebar"></aside>
-      <main id="content" class="app-content"></main>
+  <div id="app" class="app-container">
+    <!-- Header -->
+    <header class="app-header" id="app-header">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">Smart P&ID</span>
+      </div>
+      <h1 id="header-title">Plant 3D Configuration</h1>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
+      </div>
     </div>
 
-    <!-- Status bar -->
-    <footer class="app-statusbar">
-      <span id="status-text">Loading...</span>
+    <!-- Main content with sidebar -->
+    <div class="main-layout">
+      <aside id="sidebar" class="sidebar"></aside>
+      <main id="content" class="wizard-content"></main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="wizard-footer" id="wizard-footer">
+      <span id="status-text" class="step-counter">Loading...</span>
     </footer>
   </div>
 </body>

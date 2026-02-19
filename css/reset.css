@@ -1,4 +1,4 @@
-/* Minimal CSS Reset */
+/* Minimal CSS Reset - ESP Theme */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -11,6 +11,7 @@ html, body {
   font-size: var(--font-size-base);
   color: var(--text-primary);
   background: var(--bg-primary);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -1,4 +1,4 @@
-/* Screen 4: Main Hub */
+/* Screen 4: Main Hub - ESP Theme */
 
 .main-hub {
   padding: 12px;
@@ -59,9 +59,12 @@
 .main-hub-viewer {
   flex: 1;
   background: var(--bg-secondary);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   min-height: 0;
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
 }
 
 .main-hub-placeholder {
