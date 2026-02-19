@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart P&ID - Plant 3D Plugin</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/document-viewer.css">
+  <link rel="stylesheet" href="css/division-selection.css">
+  <link rel="stylesheet" href="css/product-selection.css">
+  <link rel="stylesheet" href="css/pfd-block-selection.css">
+  <link rel="stylesheet" href="css/main-hub.css">
+  <link rel="stylesheet" href="css/block-configuration.css">
+
+  <!-- App Entry -->
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Main content with sidebar -->
+    <div class="app-main">
+      <aside id="sidebar" class="app-sidebar"></aside>
+      <main id="content" class="app-content"></main>
+    </div>
+
+    <!-- Status bar -->
+    <footer class="app-statusbar">
+      <span id="status-text">Loading...</span>
+    </footer>
+  </div>
+</body>
+</html>

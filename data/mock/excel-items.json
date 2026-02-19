@@ -1,0 +1,67 @@
+{
+  "steam_drum": {
+    "Sheet1": [
+      { "itemId": "SD-001", "itemName": "Steam Drum Assembly", "matchText": "V-101", "isMandatory": true },
+      { "itemId": "SD-002", "itemName": "Level Indicator LI-101", "matchText": "LI-101", "isMandatory": false },
+      { "itemId": "SD-003", "itemName": "Pressure Safety Valve", "matchText": "PSV-101", "isMandatory": true },
+      { "itemId": "SD-004", "itemName": "Level Control Valve", "matchText": "LCV-101", "isMandatory": false },
+      { "itemId": "SD-005", "itemName": "Steam Outlet Valve", "matchText": "V-102", "isMandatory": true },
+      { "itemId": "SD-006", "itemName": "Drain Valve", "matchText": "V-103", "isMandatory": true },
+      { "itemId": "SD-007", "itemName": "Temperature Indicator", "matchText": "TI-101", "isMandatory": false }
+    ]
+  },
+  "deaerator": {
+    "Sheet1": [
+      { "itemId": "DA-001", "itemName": "Deaerator Tank", "matchText": "TK-201", "isMandatory": true },
+      { "itemId": "DA-002", "itemName": "Spray Valve", "matchText": "V-201", "isMandatory": true },
+      { "itemId": "DA-003", "itemName": "Vent Valve", "matchText": "V-202", "isMandatory": true },
+      { "itemId": "DA-004", "itemName": "Level Transmitter", "matchText": "LT-201", "isMandatory": false },
+      { "itemId": "DA-005", "itemName": "Pressure Indicator", "matchText": "PI-201", "isMandatory": false }
+    ]
+  },
+  "economizer": {
+    "Sheet1": [
+      { "itemId": "EC-001", "itemName": "Economizer Coil", "matchText": "E-301", "isMandatory": true },
+      { "itemId": "EC-002", "itemName": "Inlet Isolation Valve", "matchText": "V-301", "isMandatory": true },
+      { "itemId": "EC-003", "itemName": "Outlet Isolation Valve", "matchText": "V-302", "isMandatory": true },
+      { "itemId": "EC-004", "itemName": "Temperature Transmitter", "matchText": "TT-301", "isMandatory": false },
+      { "itemId": "EC-005", "itemName": "Bypass Valve", "matchText": "V-303", "isMandatory": false },
+      { "itemId": "EC-006", "itemName": "Drain Valve", "matchText": "V-304", "isMandatory": true }
+    ]
+  },
+  "chemical_dosing": {
+    "Sheet1": [
+      { "itemId": "CD-001", "itemName": "Chemical Tank", "matchText": "TK-401", "isMandatory": true },
+      { "itemId": "CD-002", "itemName": "Dosing Pump A", "matchText": "P-401A", "isMandatory": true },
+      { "itemId": "CD-003", "itemName": "Dosing Pump B", "matchText": "P-401B", "isMandatory": true },
+      { "itemId": "CD-004", "itemName": "Level Indicator", "matchText": "LI-401", "isMandatory": false },
+      { "itemId": "CD-005", "itemName": "Agitator", "matchText": "AG-401", "isMandatory": false }
+    ]
+  },
+  "bfw_pumps": {
+    "Sheet1": [
+      { "itemId": "BP-001", "itemName": "BFW Pump A", "matchText": "P-501A", "isMandatory": true },
+      { "itemId": "BP-002", "itemName": "BFW Pump B", "matchText": "P-501B", "isMandatory": true },
+      { "itemId": "BP-003", "itemName": "Suction Strainer", "matchText": "STR-501", "isMandatory": false },
+      { "itemId": "BP-004", "itemName": "Check Valve", "matchText": "V-501", "isMandatory": true },
+      { "itemId": "BP-005", "itemName": "Pressure Gauge", "matchText": "PI-501", "isMandatory": false }
+    ]
+  },
+  "boiler_feed_water_pump": {
+    "Sheet1": [
+      { "itemId": "BF-001", "itemName": "Feed Water Pump", "matchText": "P-601", "isMandatory": true },
+      { "itemId": "BF-002", "itemName": "Recirculation Valve", "matchText": "V-601", "isMandatory": true },
+      { "itemId": "BF-003", "itemName": "Flow Transmitter", "matchText": "FT-601", "isMandatory": false }
+    ]
+  },
+  "blowdown_tank": {
+    "Sheet1": [
+      { "itemId": "BD-001", "itemName": "Blowdown Tank", "matchText": "TK-701", "isMandatory": true },
+      { "itemId": "BD-002", "itemName": "Blowdown Valve", "matchText": "V-701", "isMandatory": true },
+      { "itemId": "BD-003", "itemName": "Flash Tank", "matchText": "TK-702", "isMandatory": true },
+      { "itemId": "BD-004", "itemName": "Drain Valve", "matchText": "V-702", "isMandatory": true },
+      { "itemId": "BD-005", "itemName": "Temperature Indicator", "matchText": "TI-701", "isMandatory": false },
+      { "itemId": "BD-006", "itemName": "Level Switch", "matchText": "LS-701", "isMandatory": false }
+    ]
+  }
+}

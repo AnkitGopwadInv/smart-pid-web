@@ -1,0 +1,149 @@
+/* Smart P&ID Web - CSS Custom Properties
+   Mapped from Views/Resources/Colors.xaml and Styles.xaml */
+
+:root {
+  /* Background Colors (Light Theme) */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --bg-tertiary: #E8E8E8;
+  --bg-document: #E8E8E8;
+
+  /* Text Colors */
+  --text-primary: #1E1E1E;
+  --text-secondary: #6E6E6E;
+  --text-muted: #808080;
+  --text-disabled: #A0A0A0;
+
+  /* Accent Colors */
+  --accent-primary: #0078D4;
+  --accent-hover: #1A86D9;
+  --accent-pressed: #005A9E;
+  --accent-green: #6CCB5F;
+  --accent-orange: #F4A261;
+  --accent-red: #F44336;
+
+  /* Border Colors */
+  --border-default: #CCCCCC;
+  --border-light: #E0E0E0;
+  --border-focus: #0078D4;
+
+  /* Status Colors */
+  --status-success: #6CCB5F;
+  --status-error: #F44336;
+  --status-warning: #F4A261;
+
+  /* Status Backgrounds */
+  --bg-error: #FDF3F1;
+  --bg-success: #F1FAF1;
+  --bg-warning: #FFF8E5;
+
+  /* Checkbox Colors */
+  --checkbox-selected: #6CCB5F;
+  --checkbox-mandatory: #4FC3F7;
+  --checkbox-unselected: #888888;
+
+  /* Radio Button Colors */
+  --radio-border: #CCCCCC;
+  --radio-selected: #0078D4;
+  --radio-fill: #0078D4;
+
+  /* Sidebar Navigation */
+  --sidebar-bg: #F5F5F5;
+  --sidebar-border: #E0E0E0;
+  --sidebar-title: #808080;
+  --sidebar-item-hover: #E8E8E8;
+  --sidebar-item-active: #E6F2FF;
+  --sidebar-number-bg: #E8E8E8;
+  --sidebar-number-completed: #6CCB5F;
+  --sidebar-number-active: #0078D4;
+  --sidebar-check: #6CCB5F;
+
+  /* Tab Colors */
+  --tab-active-border: #0078D4;
+  --tab-inactive-text: #6E6E6E;
+  --tab-hover-bg: #F0F0F0;
+  --tab-active-bg: #0078D4;
+
+  /* Card/Selection Colors */
+  --bg-selected: #E6F2FF;
+  --bg-hover: #F0F0F0;
+
+  /* Button States */
+  --accent-bg-hover: #F0F0F0;
+  --accent-bg-pressed: #E0E0E0;
+
+  /* Button Success */
+  --btn-success-bg: #6CCB5F;
+  --btn-success-hover: #5AB850;
+  --btn-success-fg: #FFFFFF;
+
+  /* Button Secondary */
+  --btn-secondary-bg: #F5F5F5;
+  --btn-secondary-border: #CCCCCC;
+  --btn-secondary-fg: #1E1E1E;
+  --btn-secondary-hover-bg: #E8E8E8;
+  --btn-secondary-hover-border: #0078D4;
+
+  /* Button Disabled */
+  --btn-disabled-bg: #E8E8E8;
+  --btn-disabled-fg: #A0A0A0;
+
+  /* Start Over Button */
+  --btn-startover-border: #F44336;
+  --btn-startover-fg: #F44336;
+  --btn-startover-hover-bg: #FDF3F1;
+
+  /* Progress Bar */
+  --progress-bg: #E8E8E8;
+  --progress-fill-start: #0078D4;
+  --progress-fill-end: #6CCB5F;
+
+  /* Badge Colors */
+  --badge-done-bg: #F1FAF1;
+  --badge-done-fg: #6CCB5F;
+  --badge-pending-bg: #FFF8E5;
+  --badge-pending-fg: #F4A261;
+  --badge-mandatory-bg: #E6F7FF;
+  --badge-mandatory-fg: #4FC3F7;
+
+  /* Icon Colors */
+  --icon-factory: #0078D4;
+  --icon-leaf: #6CCB5F;
+  --icon-water: #4FC3F7;
+  --icon-default: #0078D4;
+
+  /* Spacing System (8px Grid) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* Typography */
+  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 15px;
+  --font-size-xl: 16px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 24px;
+  --font-size-4xl: 28px;
+
+  /* Border Radii */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 2px 6px rgba(0,0,0,0.15);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.2);
+}

@@ -1,0 +1,218 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2025-12-22",
+  "divisions": [
+    {
+      "id": "c-and-h",
+      "name": "C&H",
+      "description": "Combustion & Heating Solutions",
+      "icon": "factory",
+      "products": [
+        {
+          "id": "biomass-fired-boilers",
+          "name": "Biomass Fired Boilers",
+          "description": "Travelling Grate, Pinhole Grate, Pusher Grate",
+          "pfdBlocks": []
+        },
+        {
+          "id": "fixed-plate-afbc-boilers",
+          "name": "Fixed Plate AFBC Boilers",
+          "description": "Atmospheric Fluidised Bed Combustion boilers with fixed plate design",
+          "pfdBlocks": []
+        },
+        {
+          "id": "spent-wash-fired-boilers",
+          "name": "Spent Wash Fired Boilers",
+          "description": "Boilers designed for spent wash incineration",
+          "pfdBlocks": []
+        },
+        {
+          "id": "waste-to-energy-boilers",
+          "name": "Waste-to-Energy Boilers",
+          "description": "Converting waste materials to usable energy",
+          "pfdBlocks": []
+        },
+        {
+          "id": "oil-gas-fired-boilers",
+          "name": "Oil & Gas Fired Boilers",
+          "description": "D-Type, Radiant Boilers",
+          "pfdBlocks": []
+        },
+        {
+          "id": "lean-gas-fired-boilers",
+          "name": "Lean Gas Fired Boilers",
+          "description": "Boilers designed for low calorific value gas combustion",
+          "pfdBlocks": []
+        },
+        {
+          "id": "whrb",
+          "name": "Waste Heat Recovery Boilers (WHRB)",
+          "description": "Heat recovery from industrial processes",
+          "pfdBlocks": []
+        },
+        {
+          "id": "whru",
+          "name": "Waste Heat Recovery Units (WHRU)",
+          "description": "Units for recovering waste heat from exhaust gases",
+          "pfdBlocks": []
+        },
+        {
+          "id": "fired-heaters-process-furnaces",
+          "name": "Fired Heaters & Process Furnaces",
+          "description": "Industrial heating equipment for process applications",
+          "pfdBlocks": []
+        },
+        {
+          "id": "fbc-afbc-cfbc",
+          "name": "Fluidised Bed Combustion",
+          "description": "AFBC / CFBC",
+          "pfdBlocks": []
+        },
+        {
+          "id": "pulverised-fuel-fired-boilers",
+          "name": "Pulverised Fuel Fired Boilers",
+          "description": "Boilers using pulverised coal or biomass",
+          "pfdBlocks": []
+        },
+        {
+          "id": "bidrum-boilers",
+          "name": "Bidrum Boilers",
+          "description": "Two-drum water tube boilers",
+          "pfdBlocks": [
+            {
+              "id": "steam_drum",
+              "name": "STEAM DRUM",
+              "folder": "STEAM DRUM",
+              "textract-refresh": false,
+              "is_mandatory": true
+            },
+            {
+              "id": "deaerator",
+              "name": "DEAERATOR",
+              "folder": "DEAERATOR",
+              "textract-refresh": false,
+              "is_mandatory": true
+            },
+            {
+              "id": "economizer",
+              "name": "ECONOMIZER",
+              "folder": "ECONOMIZER",
+              "textract-refresh": false,
+              "is_mandatory": true
+            },
+            {
+              "id": "chemical_dosing",
+              "name": "CHEMICAL DOSING",
+              "folder": "CHEMICAL DOSING",
+              "textract-refresh": false,
+              "is_mandatory": false
+            },
+            {
+              "id": "bfw_pumps",
+              "name": "BFW PUMPS",
+              "folder": "BFW PUMPS",
+              "textract-refresh": false,
+              "is_mandatory": true
+            },
+            {
+              "id": "boiler_feed_water_pump",
+              "name": "BOILER FEED WATER PUMP",
+              "folder": "BOILER FEED WATER PUMP",
+              "textract-refresh": false,
+              "is_mandatory": false
+            },
+            {
+              "id": "blowdown_tank",
+              "name": "BLOWDOWN TANK",
+              "folder": "BLOWDOWN TANK",
+              "textract-refresh": false,
+              "is_mandatory": true
+            }
+          ]
+        },
+        {
+          "id": "hrsg",
+          "name": "Heat Recovery Steam Generators (HRSG)",
+          "description": "Steam generators for combined cycle power plants",
+          "pfdBlocks": []
+        }
+      ]
+    },
+    {
+      "id": "enviro",
+      "name": "Enviro",
+      "description": "Environmental Solutions",
+      "icon": "leaf",
+      "products": [
+        {
+          "id": "electrostatic-precipitators",
+          "name": "Electrostatic Precipitators",
+          "description": "Dry ESP / Wet ESP",
+          "pfdBlocks": []
+        },
+        {
+          "id": "bag-houses",
+          "name": "Bag Houses / Bag Filters",
+          "description": "Pulse Jet / Reverse Air",
+          "pfdBlocks": []
+        },
+        {
+          "id": "combofilters",
+          "name": "Combofilters",
+          "description": "Combined filtration systems",
+          "pfdBlocks": []
+        },
+        {
+          "id": "flue-gas-desulphurisation",
+          "name": "Flue Gas Desulphurisation",
+          "description": "WFGD / DSI / SDA",
+          "pfdBlocks": []
+        },
+        {
+          "id": "scrubbers",
+          "name": "Scrubbers",
+          "description": "Gas scrubbing systems for emission control",
+          "pfdBlocks": []
+        }
+      ]
+    },
+    {
+      "id": "ipg",
+      "name": "IPG",
+      "description": "Industrial Process & Water",
+      "icon": "water",
+      "products": [
+        {
+          "id": "water-treatment",
+          "name": "Water Treatment",
+          "description": "Chemical Dosing, Clarifiers, Filters, Softeners, DM, Membrane Filtration",
+          "pfdBlocks": []
+        },
+        {
+          "id": "wastewater-treatment",
+          "name": "Wastewater Treatment",
+          "description": "MBR/SBR, Biocask, FAB, Bio Filter, Flocculator, DAF, Clarifiers",
+          "pfdBlocks": []
+        },
+        {
+          "id": "zero-liquid-discharge",
+          "name": "Zero Liquid Discharge",
+          "description": "MVR, MEE",
+          "pfdBlocks": []
+        },
+        {
+          "id": "solid-waste-treatment",
+          "name": "Solid Waste Treatment",
+          "description": "Bioenergen, Incinerator",
+          "pfdBlocks": []
+        },
+        {
+          "id": "sludge-handling",
+          "name": "Sludge Handling",
+          "description": "Centrifuge, Filter Press",
+          "pfdBlocks": []
+        }
+      ]
+    }
+  ]
+}

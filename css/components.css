@@ -1,0 +1,207 @@
+/* Button Styles */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 8px 16px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: 2px solid transparent;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Primary Button (Blue) */
+.btn-primary {
+  background: var(--accent-primary);
+  color: white;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+.btn-primary:active:not(:disabled) {
+  background: var(--accent-pressed);
+}
+
+/* Secondary Button (Outline) */
+.btn-secondary {
+  background: transparent;
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--accent-bg-hover);
+}
+.btn-secondary:active:not(:disabled) {
+  background: var(--accent-bg-pressed);
+}
+
+/* Success Button (Green) */
+.btn-success {
+  background: var(--btn-success-bg);
+  color: var(--btn-success-fg);
+  border-radius: var(--radius-md);
+}
+.btn-success:hover:not(:disabled) {
+  background: var(--btn-success-hover);
+}
+.btn-success:active:not(:disabled) {
+  background: #4AA840;
+}
+.btn-success:disabled {
+  background: var(--btn-disabled-bg);
+  color: var(--btn-disabled-fg);
+}
+
+/* Start Over Button (Red outline) */
+.btn-startover {
+  background: transparent;
+  color: var(--btn-startover-fg);
+  border: 1px solid var(--btn-startover-border);
+  border-radius: var(--radius-md);
+}
+.btn-startover:hover:not(:disabled) {
+  background: var(--btn-startover-hover-bg);
+}
+.btn-startover:active:not(:disabled) {
+  background: #FCE4EC;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+}
+.badge-mandatory {
+  background: var(--badge-mandatory-bg);
+  color: var(--badge-mandatory-fg);
+}
+.badge-done {
+  background: var(--badge-done-bg);
+  color: var(--badge-done-fg);
+}
+.badge-pending {
+  background: var(--badge-pending-bg);
+  color: var(--badge-pending-fg);
+}
+.badge-required {
+  background: rgba(108, 203, 95, 0.18);
+  color: #6CCB5F;
+  padding: 4px 8px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-sm);
+}
+.breadcrumb-item {
+  color: var(--text-muted);
+}
+.breadcrumb-item.active {
+  color: var(--accent-primary);
+}
+.breadcrumb-item.clickable {
+  cursor: pointer;
+}
+.breadcrumb-item.clickable:hover {
+  color: var(--accent-primary);
+  text-decoration: underline;
+}
+.breadcrumb-separator {
+  margin: 0 8px;
+  color: var(--border-light);
+  font-size: var(--font-size-base);
+}
+
+/* Screen container */
+.screen {
+  padding: var(--space-xl);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.screen-header {
+  margin-bottom: var(--space-lg);
+}
+.screen-title {
+  font-size: var(--font-size-4xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+.screen-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+}
+.screen-body {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+.screen-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+}
+
+/* Error panel */
+.error-panel {
+  background: var(--bg-secondary);
+  border: 1px solid #E53935;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.error-panel-icon { font-size: 20px; }
+.error-panel-text { color: #E53935; font-size: var(--font-size-md); }
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  color: var(--text-muted);
+}
+.empty-state-title {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--space-sm);
+}
+.empty-state-text {
+  font-size: var(--font-size-base);
+  opacity: 0.7;
+}
+
+/* Loading state */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  color: var(--text-muted);
+  font-size: var(--font-size-lg);
+}

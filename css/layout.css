@@ -1,0 +1,48 @@
+/* App Shell Layout */
+#app {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-main {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  overflow: hidden;
+}
+
+.app-sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  overflow: auto;
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.app-statusbar {
+  height: 24px;
+  background: var(--bg-secondary);
+  padding: 0 var(--space-sm);
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--border-light);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+/* Responsive: collapse sidebar below 768px */
+@media (max-width: 768px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+  .app-sidebar {
+    display: none;
+  }
+}
