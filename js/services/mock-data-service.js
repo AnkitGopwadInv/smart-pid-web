@@ -71,8 +71,8 @@ class MockDataService {
     if (this._excelData?.[blockId]) {
       return Object.keys(this._excelData[blockId]);
     }
-    // Default: every block has at least one sheet
-    return ['Sheet1'];
+    // Default: every block has 4 sheets
+    return ['P&ID', 'Instrument List', 'Line List', 'Equipment List'];
   }
 
   /**

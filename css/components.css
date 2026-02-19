@@ -150,6 +150,7 @@
 }
 .screen-header {
   margin-bottom: var(--space-lg);
+  flex-shrink: 0;
 }
 .screen-title {
   font-size: var(--font-size-4xl);
@@ -172,6 +173,7 @@
   align-items: center;
   margin-top: var(--space-xl);
   padding-top: var(--space-lg);
+  flex-shrink: 0;
 }
 
 /* Error panel */

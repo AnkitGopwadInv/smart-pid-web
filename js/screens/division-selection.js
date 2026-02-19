@@ -1,6 +1,6 @@
 /**
  * Screen 1: Division Selection
- * Port of Views/DivisionSelectionView.xaml + ViewModels/DivisionSelectionViewModel.cs
+ * Auto-redirects on selection — no Next button needed.
  */
 import { BaseScreen } from './base-screen.js';
 import { el } from '../utils/dom.js';
@@ -11,36 +11,19 @@ import { getIconSvg, getIconColor } from '../models/catalog.js';
 export class DivisionSelectionScreen extends BaseScreen {
   constructor() {
     super();
-    this._selectedDivisionId = null;
-    this._nextBtn = null;
   }
 
   render() {
     const container = el('div', { className: 'screen' });
 
-    // Header
     const header = el('div', { className: 'screen-header' },
       el('h1', { className: 'screen-title' }, 'Select Division'),
       el('p', { className: 'screen-subtitle' }, 'Choose your business division to get started')
     );
 
-    // Card grid
     this._grid = el('div', { className: 'division-grid screen-body' });
 
-    // Footer
-    this._nextBtn = el('button', {
-      className: 'btn btn-primary',
-      disabled: 'disabled',
-      onClick: () => this._onNext(),
-      style: { minWidth: '120px' }
-    }, 'Next \u2192');
-
-    const footer = el('div', { className: 'screen-footer' },
-      el('div'),
-      this._nextBtn
-    );
-
-    container.append(header, this._grid, footer);
+    container.append(header, this._grid);
     return container;
   }
 
@@ -78,11 +61,11 @@ export class DivisionSelectionScreen extends BaseScreen {
       tabindex: '0',
       role: 'option',
       dataset: { divisionId: division.id },
-      onClick: () => this._selectDivision(division.id),
+      onClick: () => this._selectAndNavigate(division.id),
       onKeydown: (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          this._selectDivision(division.id);
+          this._selectAndNavigate(division.id);
         }
       }
     },
@@ -98,21 +81,16 @@ export class DivisionSelectionScreen extends BaseScreen {
     return card;
   }
 
-  _selectDivision(divisionId) {
-    // Deselect all
+  _selectAndNavigate(divisionId) {
+    // Highlight card briefly then navigate
     this._grid.querySelectorAll('.division-card').forEach(c => c.classList.remove('selected'));
-
-    // Select new
     const card = this._grid.querySelector(`[data-division-id="${divisionId}"]`);
     if (card) card.classList.add('selected');
 
-    this._selectedDivisionId = divisionId;
-    this._nextBtn.disabled = false;
-  }
-
-  _onNext() {
-    if (!this._selectedDivisionId) return;
-    navigationService.setSelectedDivision(this._selectedDivisionId);
-    navigationService.navigateTo(Screen.ProductSelection);
+    navigationService.setSelectedDivision(divisionId);
+    // Auto-redirect after brief visual feedback
+    setTimeout(() => {
+      navigationService.navigateTo(Screen.ProductSelection);
+    }, 150);
   }
 }

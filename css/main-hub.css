@@ -1,7 +1,7 @@
-/* Screen 4: Main Hub - ESP Theme */
+/* Screen 4: Main Hub - PFD diagram viewer with configure buttons + right block panel */
 
 .main-hub {
-  padding: 12px;
+  padding: 8px 12px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -56,15 +56,238 @@
   font-size: var(--font-size-xs);
 }
 
+/* Split layout: viewer + right panel */
+.main-hub-split {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  min-height: 0;
+  position: relative;
+}
+
+/* Viewer area */
 .main-hub-viewer {
   flex: 1;
   background: var(--bg-secondary);
   border-radius: var(--radius-md);
   overflow: hidden;
   min-height: 0;
+  min-width: 0;
   border: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
+}
+
+/* Right panel: PFD Blocks */
+.main-hub-right {
+  width: 280px;
+  min-width: 280px;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: width 0.2s ease, min-width 0.2s ease;
+}
+
+.hub-panel-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  padding: 14px 18px;
+  flex-shrink: 0;
+}
+
+.hub-panel-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hub-panel-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-inverse);
+  margin-bottom: 2px;
+}
+
+.hub-panel-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Block list */
+.hub-block-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.hub-block-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  cursor: default;
+  transition: background 0.15s ease;
+}
+
+.hub-block-item:hover {
+  background: var(--bg-hover);
+}
+
+.hub-block-item:last-child {
+  border-bottom: none;
+}
+
+/* Status icon */
+.hub-block-status {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.hub-block-status.configured {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.hub-block-status.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+/* Block info */
+.hub-block-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.hub-block-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hub-block-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.hub-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.hub-badge.mandatory {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.hub-badge.optional {
+  background: #f3f4f6;
+  color: var(--text-muted);
+}
+
+.hub-badge.sheets {
+  background: #dbeafe;
+  color: var(--primary-color);
+}
+
+/* Configure button in list */
+.hub-block-config-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.hub-block-config-btn.pending {
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+  color: white;
+}
+
+.hub-block-config-btn.pending:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(8, 145, 178, 0.3);
+}
+
+.hub-block-config-btn.configured {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.hub-block-config-btn.configured:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* Panel summary */
+.hub-panel-summary {
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-light);
+  padding: 12px 18px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* Right panel collapsed state */
+.main-hub-right-collapsed {
+  width: 42px !important;
+  min-width: 42px !important;
+}
+
+.main-hub-right-collapsed .hub-panel-header {
+  padding: 8px 7px;
+}
+
+.main-hub-right-collapsed .hub-panel-header-top {
+  justify-content: center;
+}
+
+.main-hub-right-collapsed .hub-panel-title,
+.main-hub-right-collapsed .hub-panel-count,
+.main-hub-right-collapsed .hub-block-list,
+.main-hub-right-collapsed .hub-panel-summary {
+  display: none;
+}
+
+.main-hub-right-collapsed::after {
+  content: 'PFD Blocks';
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  cursor: pointer;
 }
 
 .main-hub-placeholder {

@@ -1,11 +1,27 @@
 /**
  * Screen 3: PFD Block Selection
- * Port of Views/PfdBlockSelectionView.xaml + ViewModels/PfdBlockSelectionViewModel.cs
+ * Card-based UI with icons, mandatory lock badges, and toggle selection.
  */
 import { BaseScreen } from './base-screen.js';
 import { el } from '../utils/dom.js';
 import { catalogService } from '../services/catalog-service.js';
 import { navigationService, Screen } from '../services/navigation-service.js';
+
+// Block-specific icons
+const blockIcons = {
+  steam_drum: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="8" rx="8" ry="4"/><path d="M4 8v4c0 2.2 3.6 4 8 4s8-1.8 8-4V8"/><path d="M8 11v3M12 12v3M16 11v3"/></svg>`,
+  deaerator: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="4" width="14" height="10" rx="2"/><path d="M8 14v6M16 14v6M5 20h14"/><path d="M9 8h6M9 11h4"/></svg>`,
+  economizer: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 6v12M11 6v12M15 6v12"/><path d="M3 10h18M3 14h18"/></svg>`,
+  chemical_dosing: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 2h6v6l3 10a2 2 0 01-2 2H8a2 2 0 01-2-2l3-10V2z"/><path d="M9 2h6"/><path d="M7 15h10"/></svg>`,
+  bfw_pumps: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><path d="M12 5v-3M12 22v-3M5 12H2M22 12h-3"/></svg>`,
+  boiler_feed_water_pump: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="6"/><path d="M12 6v12M6 12h12"/><path d="M2 12h4M18 12h4M12 2v4M12 18v4"/></svg>`,
+  blowdown_tank: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4h12v2a8 8 0 01-2 5.3V20H8v-8.7A8 8 0 016 6V4z"/><path d="M6 4h12"/><path d="M10 13h4M10 16h4"/></svg>`,
+  default: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>`
+};
+
+function getBlockIcon(blockId) {
+  return blockIcons[blockId] || blockIcons['default'];
+}
 
 export class PfdBlockSelectionScreen extends BaseScreen {
   constructor() {
@@ -13,6 +29,8 @@ export class PfdBlockSelectionScreen extends BaseScreen {
     this._blocks = [];
     this._continueBtn = null;
     this._selectedCountEl = null;
+    this._totalCountEl = null;
+    this._mandatoryCountEl = null;
   }
 
   render() {
@@ -25,36 +43,50 @@ export class PfdBlockSelectionScreen extends BaseScreen {
 
     const container = el('div', { className: 'screen' });
 
-    // Header with breadcrumb
+    // Header
     const header = el('div', { className: 'screen-header' },
       el('div', { className: 'breadcrumb' },
-        el('span', { className: 'breadcrumb-item' }, division?.name || ''),
+        el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.DivisionSelection) }, division?.name || ''),
         el('span', { className: 'breadcrumb-separator' }, '\u203A'),
-        el('span', { className: 'breadcrumb-item' }, product?.name || ''),
+        el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.ProductSelection) }, product?.name || ''),
         el('span', { className: 'breadcrumb-separator' }, '\u203A'),
         el('span', { className: 'breadcrumb-item active' }, 'Select Blocks')
       ),
       el('h1', { className: 'screen-title' }, 'Select PFD Blocks'),
-      el('p', { className: 'screen-subtitle' }, 'Choose the blocks you need for your P&ID')
+      el('p', { className: 'screen-subtitle' }, 'Choose the blocks to include in your P&ID configuration')
     );
 
-    // Block list container
-    const listContainer = el('div', { className: 'block-list-container screen-body' });
-    this._list = el('div', { className: 'block-list' });
+    // Summary bar
+    this._selectedCountEl = el('span', { className: 'pfd-summary-value' }, '0');
+    this._totalCountEl = el('span', { className: 'pfd-summary-value' }, '0');
+    this._mandatoryCountEl = el('span', { className: 'pfd-summary-value' }, '0');
 
-    this._selectedCountEl = el('span', { className: 'count' }, '0');
-    const footerCount = el('div', { className: 'block-selected-footer' },
-      'Selected: ', this._selectedCountEl, ' blocks'
+    const summaryBar = el('div', { className: 'pfd-summary-bar' },
+      el('div', { className: 'pfd-summary-item' },
+        el('span', { className: 'pfd-summary-label' }, 'Selected'),
+        this._selectedCountEl
+      ),
+      el('div', { className: 'pfd-summary-divider' }),
+      el('div', { className: 'pfd-summary-item' },
+        el('span', { className: 'pfd-summary-label' }, 'Mandatory'),
+        this._mandatoryCountEl
+      ),
+      el('div', { className: 'pfd-summary-divider' }),
+      el('div', { className: 'pfd-summary-item' },
+        el('span', { className: 'pfd-summary-label' }, 'Total'),
+        this._totalCountEl
+      )
     );
 
-    listContainer.append(this._list, footerCount);
+    // Block grid
+    this._grid = el('div', { className: 'pfd-block-grid screen-body' });
 
-    // Footer navigation
+    // Footer
     this._continueBtn = el('button', {
       className: 'btn btn-primary',
       disabled: 'disabled',
       onClick: () => this._onContinue(),
-      style: { minWidth: '120px' }
+      style: { minWidth: '140px' }
     }, 'Continue \u2192');
 
     const backBtn = el('button', {
@@ -65,7 +97,7 @@ export class PfdBlockSelectionScreen extends BaseScreen {
 
     const footer = el('div', { className: 'screen-footer' }, backBtn, this._continueBtn);
 
-    container.append(header, listContainer, footer);
+    container.append(header, summaryBar, this._grid, footer);
     return container;
   }
 
@@ -83,10 +115,10 @@ export class PfdBlockSelectionScreen extends BaseScreen {
     }
 
     const pfdBlocks = catalogService.getPfdBlocks(divisionId, productId);
-    this._list.innerHTML = '';
+    this._grid.innerHTML = '';
 
     if (pfdBlocks.length === 0) {
-      this._list.innerHTML = `<div class="empty-state">
+      this._grid.innerHTML = `<div class="empty-state">
         <div class="empty-state-title">No PFD blocks available</div>
         <div class="empty-state-text">This product has no blocks configured.</div>
       </div>`;
@@ -100,24 +132,26 @@ export class PfdBlockSelectionScreen extends BaseScreen {
     }));
 
     for (const block of this._blocks) {
-      const item = this._createBlockItem(block);
-      this._list.appendChild(item);
+      const card = this._createBlockCard(block);
+      this._grid.appendChild(card);
     }
 
-    this._updateSelectedCount();
+    this._updateCounts();
   }
 
-  _createBlockItem(block) {
+  _createBlockCard(block) {
+    const iconSvg = getBlockIcon(block.id);
+
     const checkbox = el('div', {
-      className: `block-checkbox${block.isSelected ? ' checked' : ''}`
-    }, el('span', { className: 'checkmark' }, '\u2713'));
+      className: `pfd-block-check${block.isSelected ? ' checked' : ''}${block.isMandatory ? ' locked' : ''}`
+    },
+      block.isMandatory
+        ? el('span', { className: 'lock-icon' }, '\uD83D\uDD12')
+        : el('span', { className: 'check-icon' }, '\u2713')
+    );
 
-    const badge = block.isMandatory
-      ? el('span', { className: 'badge badge-required' }, 'Required')
-      : null;
-
-    const item = el('div', {
-      className: `block-item${block.isMandatory ? ' mandatory' : ''}`,
+    const card = el('div', {
+      className: `pfd-block-card${block.isMandatory ? ' mandatory' : ''}${block.isSelected ? ' selected' : ''}`,
       tabindex: '0',
       role: 'checkbox',
       'aria-checked': String(block.isSelected),
@@ -129,29 +163,46 @@ export class PfdBlockSelectionScreen extends BaseScreen {
           this._toggleBlock(block);
         }
       }
-    }, checkbox, el('span', { className: 'block-name' }, block.name), badge);
+    },
+      el('div', { className: 'pfd-block-card-top' },
+        el('div', { className: `pfd-block-icon${block.isMandatory ? ' mandatory' : ''}`, htmlContent: iconSvg }),
+        checkbox
+      ),
+      el('div', { className: 'pfd-block-card-body' },
+        el('div', { className: 'pfd-block-name' }, block.name),
+        block.isMandatory
+          ? el('span', { className: 'pfd-block-badge mandatory' }, 'Required')
+          : el('span', { className: 'pfd-block-badge optional' }, 'Optional')
+      )
+    );
 
-    return item;
+    return card;
   }
 
   _toggleBlock(block) {
     if (block.isMandatory) return;
 
     block.isSelected = !block.isSelected;
-    const itemEl = this._list.querySelector(`[data-block-id="${block.id}"]`);
-    if (itemEl) {
-      const cb = itemEl.querySelector('.block-checkbox');
+    const cardEl = this._grid.querySelector(`[data-block-id="${block.id}"]`);
+    if (cardEl) {
+      cardEl.classList.toggle('selected', block.isSelected);
+      cardEl.setAttribute('aria-checked', String(block.isSelected));
+      const cb = cardEl.querySelector('.pfd-block-check');
       cb.classList.toggle('checked', block.isSelected);
-      itemEl.setAttribute('aria-checked', String(block.isSelected));
     }
 
-    this._updateSelectedCount();
+    this._updateCounts();
   }
 
-  _updateSelectedCount() {
-    const count = this._blocks.filter(b => b.isSelected).length;
-    this._selectedCountEl.textContent = String(count);
-    this._continueBtn.disabled = count < 1;
+  _updateCounts() {
+    const selected = this._blocks.filter(b => b.isSelected).length;
+    const mandatory = this._blocks.filter(b => b.isMandatory).length;
+    const total = this._blocks.length;
+
+    this._selectedCountEl.textContent = String(selected);
+    this._mandatoryCountEl.textContent = String(mandatory);
+    this._totalCountEl.textContent = String(total);
+    this._continueBtn.disabled = selected < 1;
   }
 
   _onContinue() {

@@ -1,6 +1,6 @@
 {
   "steam_drum": {
-    "Sheet1": [
+    "P&ID": [
       { "itemId": "SD-001", "itemName": "Steam Drum Assembly", "matchText": "V-101", "isMandatory": true },
       { "itemId": "SD-002", "itemName": "Level Indicator LI-101", "matchText": "LI-101", "isMandatory": false },
       { "itemId": "SD-003", "itemName": "Pressure Safety Valve", "matchText": "PSV-101", "isMandatory": true },
@@ -8,60 +8,176 @@
       { "itemId": "SD-005", "itemName": "Steam Outlet Valve", "matchText": "V-102", "isMandatory": true },
       { "itemId": "SD-006", "itemName": "Drain Valve", "matchText": "V-103", "isMandatory": true },
       { "itemId": "SD-007", "itemName": "Temperature Indicator", "matchText": "TI-101", "isMandatory": false }
+    ],
+    "Instrument List": [
+      { "itemId": "SD-IL-001", "itemName": "Level Indicator LI-101", "matchText": "LI-101", "isMandatory": true },
+      { "itemId": "SD-IL-002", "itemName": "Temperature Indicator TI-101", "matchText": "TI-101", "isMandatory": true },
+      { "itemId": "SD-IL-003", "itemName": "Pressure Safety Valve PSV-101", "matchText": "PSV-101", "isMandatory": true },
+      { "itemId": "SD-IL-004", "itemName": "Level Control Valve LCV-101", "matchText": "LCV-101", "isMandatory": false },
+      { "itemId": "SD-IL-005", "itemName": "Pressure Transmitter PT-101", "matchText": "PT-101", "isMandatory": false }
+    ],
+    "Line List": [
+      { "itemId": "SD-LL-001", "itemName": "Steam Header Line", "matchText": "L-101", "isMandatory": true },
+      { "itemId": "SD-LL-002", "itemName": "Feedwater Inlet Line", "matchText": "L-102", "isMandatory": true },
+      { "itemId": "SD-LL-003", "itemName": "Blowdown Line", "matchText": "L-103", "isMandatory": false },
+      { "itemId": "SD-LL-004", "itemName": "Drain Line", "matchText": "L-104", "isMandatory": false }
+    ],
+    "Equipment List": [
+      { "itemId": "SD-EQ-001", "itemName": "Steam Drum Vessel", "matchText": "V-101", "isMandatory": true },
+      { "itemId": "SD-EQ-002", "itemName": "Safety Relief Valve", "matchText": "SRV-101", "isMandatory": true },
+      { "itemId": "SD-EQ-003", "itemName": "Feedwater Control Station", "matchText": "FCS-101", "isMandatory": false },
+      { "itemId": "SD-EQ-004", "itemName": "Blowdown Separator", "matchText": "SEP-101", "isMandatory": false },
+      { "itemId": "SD-EQ-005", "itemName": "Level Gauge Glass", "matchText": "LG-101", "isMandatory": true }
     ]
   },
   "deaerator": {
-    "Sheet1": [
+    "P&ID": [
       { "itemId": "DA-001", "itemName": "Deaerator Tank", "matchText": "TK-201", "isMandatory": true },
       { "itemId": "DA-002", "itemName": "Spray Valve", "matchText": "V-201", "isMandatory": true },
       { "itemId": "DA-003", "itemName": "Vent Valve", "matchText": "V-202", "isMandatory": true },
       { "itemId": "DA-004", "itemName": "Level Transmitter", "matchText": "LT-201", "isMandatory": false },
       { "itemId": "DA-005", "itemName": "Pressure Indicator", "matchText": "PI-201", "isMandatory": false }
+    ],
+    "Instrument List": [
+      { "itemId": "DA-IL-001", "itemName": "Level Transmitter LT-201", "matchText": "LT-201", "isMandatory": true },
+      { "itemId": "DA-IL-002", "itemName": "Pressure Indicator PI-201", "matchText": "PI-201", "isMandatory": true },
+      { "itemId": "DA-IL-003", "itemName": "Temperature Transmitter TT-201", "matchText": "TT-201", "isMandatory": false },
+      { "itemId": "DA-IL-004", "itemName": "Level Switch LS-201", "matchText": "LS-201", "isMandatory": false }
+    ],
+    "Line List": [
+      { "itemId": "DA-LL-001", "itemName": "Steam Inlet Line", "matchText": "L-201", "isMandatory": true },
+      { "itemId": "DA-LL-002", "itemName": "Condensate Return Line", "matchText": "L-202", "isMandatory": true },
+      { "itemId": "DA-LL-003", "itemName": "Vent Line", "matchText": "L-203", "isMandatory": false }
+    ],
+    "Equipment List": [
+      { "itemId": "DA-EQ-001", "itemName": "Deaerator Vessel", "matchText": "TK-201", "isMandatory": true },
+      { "itemId": "DA-EQ-002", "itemName": "Storage Tank", "matchText": "TK-202", "isMandatory": true },
+      { "itemId": "DA-EQ-003", "itemName": "Spray Nozzle Assembly", "matchText": "NZ-201", "isMandatory": false },
+      { "itemId": "DA-EQ-004", "itemName": "Overflow Weir", "matchText": "WR-201", "isMandatory": false }
     ]
   },
   "economizer": {
-    "Sheet1": [
+    "P&ID": [
       { "itemId": "EC-001", "itemName": "Economizer Coil", "matchText": "E-301", "isMandatory": true },
       { "itemId": "EC-002", "itemName": "Inlet Isolation Valve", "matchText": "V-301", "isMandatory": true },
       { "itemId": "EC-003", "itemName": "Outlet Isolation Valve", "matchText": "V-302", "isMandatory": true },
       { "itemId": "EC-004", "itemName": "Temperature Transmitter", "matchText": "TT-301", "isMandatory": false },
       { "itemId": "EC-005", "itemName": "Bypass Valve", "matchText": "V-303", "isMandatory": false },
       { "itemId": "EC-006", "itemName": "Drain Valve", "matchText": "V-304", "isMandatory": true }
+    ],
+    "Instrument List": [
+      { "itemId": "EC-IL-001", "itemName": "Temperature Transmitter TT-301", "matchText": "TT-301", "isMandatory": true },
+      { "itemId": "EC-IL-002", "itemName": "Pressure Gauge PG-301", "matchText": "PG-301", "isMandatory": false },
+      { "itemId": "EC-IL-003", "itemName": "Flow Transmitter FT-301", "matchText": "FT-301", "isMandatory": false }
+    ],
+    "Line List": [
+      { "itemId": "EC-LL-001", "itemName": "Flue Gas Inlet", "matchText": "L-301", "isMandatory": true },
+      { "itemId": "EC-LL-002", "itemName": "Flue Gas Outlet", "matchText": "L-302", "isMandatory": true },
+      { "itemId": "EC-LL-003", "itemName": "Water Inlet Line", "matchText": "L-303", "isMandatory": true },
+      { "itemId": "EC-LL-004", "itemName": "Water Outlet Line", "matchText": "L-304", "isMandatory": false }
+    ],
+    "Equipment List": [
+      { "itemId": "EC-EQ-001", "itemName": "Economizer Heat Exchanger", "matchText": "E-301", "isMandatory": true },
+      { "itemId": "EC-EQ-002", "itemName": "Soot Blower", "matchText": "SB-301", "isMandatory": false },
+      { "itemId": "EC-EQ-003", "itemName": "Expansion Joint", "matchText": "EJ-301", "isMandatory": true },
+      { "itemId": "EC-EQ-004", "itemName": "Bypass Damper", "matchText": "DM-301", "isMandatory": false }
     ]
   },
   "chemical_dosing": {
-    "Sheet1": [
+    "P&ID": [
       { "itemId": "CD-001", "itemName": "Chemical Tank", "matchText": "TK-401", "isMandatory": true },
       { "itemId": "CD-002", "itemName": "Dosing Pump A", "matchText": "P-401A", "isMandatory": true },
       { "itemId": "CD-003", "itemName": "Dosing Pump B", "matchText": "P-401B", "isMandatory": true },
       { "itemId": "CD-004", "itemName": "Level Indicator", "matchText": "LI-401", "isMandatory": false },
       { "itemId": "CD-005", "itemName": "Agitator", "matchText": "AG-401", "isMandatory": false }
+    ],
+    "Instrument List": [
+      { "itemId": "CD-IL-001", "itemName": "Level Indicator LI-401", "matchText": "LI-401", "isMandatory": true },
+      { "itemId": "CD-IL-002", "itemName": "Flow Switch FS-401", "matchText": "FS-401", "isMandatory": false },
+      { "itemId": "CD-IL-003", "itemName": "pH Analyzer AT-401", "matchText": "AT-401", "isMandatory": false }
+    ],
+    "Line List": [
+      { "itemId": "CD-LL-001", "itemName": "Chemical Feed Line", "matchText": "L-401", "isMandatory": true },
+      { "itemId": "CD-LL-002", "itemName": "Recirculation Line", "matchText": "L-402", "isMandatory": false },
+      { "itemId": "CD-LL-003", "itemName": "Drain Line", "matchText": "L-403", "isMandatory": false }
+    ],
+    "Equipment List": [
+      { "itemId": "CD-EQ-001", "itemName": "Chemical Storage Tank", "matchText": "TK-401", "isMandatory": true },
+      { "itemId": "CD-EQ-002", "itemName": "Metering Pump A", "matchText": "P-401A", "isMandatory": true },
+      { "itemId": "CD-EQ-003", "itemName": "Metering Pump B", "matchText": "P-401B", "isMandatory": true },
+      { "itemId": "CD-EQ-004", "itemName": "Mixer Assembly", "matchText": "MX-401", "isMandatory": false }
     ]
   },
   "bfw_pumps": {
-    "Sheet1": [
+    "P&ID": [
       { "itemId": "BP-001", "itemName": "BFW Pump A", "matchText": "P-501A", "isMandatory": true },
       { "itemId": "BP-002", "itemName": "BFW Pump B", "matchText": "P-501B", "isMandatory": true },
       { "itemId": "BP-003", "itemName": "Suction Strainer", "matchText": "STR-501", "isMandatory": false },
       { "itemId": "BP-004", "itemName": "Check Valve", "matchText": "V-501", "isMandatory": true },
       { "itemId": "BP-005", "itemName": "Pressure Gauge", "matchText": "PI-501", "isMandatory": false }
+    ],
+    "Instrument List": [
+      { "itemId": "BP-IL-001", "itemName": "Pressure Gauge PI-501", "matchText": "PI-501", "isMandatory": true },
+      { "itemId": "BP-IL-002", "itemName": "Flow Transmitter FT-501", "matchText": "FT-501", "isMandatory": false },
+      { "itemId": "BP-IL-003", "itemName": "Vibration Monitor VM-501", "matchText": "VM-501", "isMandatory": false }
+    ],
+    "Line List": [
+      { "itemId": "BP-LL-001", "itemName": "Suction Line", "matchText": "L-501", "isMandatory": true },
+      { "itemId": "BP-LL-002", "itemName": "Discharge Line", "matchText": "L-502", "isMandatory": true },
+      { "itemId": "BP-LL-003", "itemName": "Minimum Flow Line", "matchText": "L-503", "isMandatory": false }
+    ],
+    "Equipment List": [
+      { "itemId": "BP-EQ-001", "itemName": "Centrifugal Pump A", "matchText": "P-501A", "isMandatory": true },
+      { "itemId": "BP-EQ-002", "itemName": "Centrifugal Pump B", "matchText": "P-501B", "isMandatory": true },
+      { "itemId": "BP-EQ-003", "itemName": "Motor A", "matchText": "M-501A", "isMandatory": true },
+      { "itemId": "BP-EQ-004", "itemName": "Motor B", "matchText": "M-501B", "isMandatory": false }
     ]
   },
   "boiler_feed_water_pump": {
-    "Sheet1": [
+    "P&ID": [
       { "itemId": "BF-001", "itemName": "Feed Water Pump", "matchText": "P-601", "isMandatory": true },
       { "itemId": "BF-002", "itemName": "Recirculation Valve", "matchText": "V-601", "isMandatory": true },
       { "itemId": "BF-003", "itemName": "Flow Transmitter", "matchText": "FT-601", "isMandatory": false }
+    ],
+    "Instrument List": [
+      { "itemId": "BF-IL-001", "itemName": "Flow Transmitter FT-601", "matchText": "FT-601", "isMandatory": true },
+      { "itemId": "BF-IL-002", "itemName": "Pressure Indicator PI-601", "matchText": "PI-601", "isMandatory": false }
+    ],
+    "Line List": [
+      { "itemId": "BF-LL-001", "itemName": "Suction Line", "matchText": "L-601", "isMandatory": true },
+      { "itemId": "BF-LL-002", "itemName": "Discharge Line", "matchText": "L-602", "isMandatory": true },
+      { "itemId": "BF-LL-003", "itemName": "Recirculation Line", "matchText": "L-603", "isMandatory": false }
+    ],
+    "Equipment List": [
+      { "itemId": "BF-EQ-001", "itemName": "Boiler Feed Pump", "matchText": "P-601", "isMandatory": true },
+      { "itemId": "BF-EQ-002", "itemName": "Drive Motor", "matchText": "M-601", "isMandatory": true },
+      { "itemId": "BF-EQ-003", "itemName": "Coupling Guard", "matchText": "CG-601", "isMandatory": false }
     ]
   },
   "blowdown_tank": {
-    "Sheet1": [
+    "P&ID": [
       { "itemId": "BD-001", "itemName": "Blowdown Tank", "matchText": "TK-701", "isMandatory": true },
       { "itemId": "BD-002", "itemName": "Blowdown Valve", "matchText": "V-701", "isMandatory": true },
       { "itemId": "BD-003", "itemName": "Flash Tank", "matchText": "TK-702", "isMandatory": true },
       { "itemId": "BD-004", "itemName": "Drain Valve", "matchText": "V-702", "isMandatory": true },
       { "itemId": "BD-005", "itemName": "Temperature Indicator", "matchText": "TI-701", "isMandatory": false },
       { "itemId": "BD-006", "itemName": "Level Switch", "matchText": "LS-701", "isMandatory": false }
+    ],
+    "Instrument List": [
+      { "itemId": "BD-IL-001", "itemName": "Temperature Indicator TI-701", "matchText": "TI-701", "isMandatory": true },
+      { "itemId": "BD-IL-002", "itemName": "Level Switch LS-701", "matchText": "LS-701", "isMandatory": true },
+      { "itemId": "BD-IL-003", "itemName": "Pressure Gauge PG-701", "matchText": "PG-701", "isMandatory": false }
+    ],
+    "Line List": [
+      { "itemId": "BD-LL-001", "itemName": "Blowdown Inlet Line", "matchText": "L-701", "isMandatory": true },
+      { "itemId": "BD-LL-002", "itemName": "Flash Steam Line", "matchText": "L-702", "isMandatory": false },
+      { "itemId": "BD-LL-003", "itemName": "Drain Outlet Line", "matchText": "L-703", "isMandatory": true }
+    ],
+    "Equipment List": [
+      { "itemId": "BD-EQ-001", "itemName": "Blowdown Vessel", "matchText": "TK-701", "isMandatory": true },
+      { "itemId": "BD-EQ-002", "itemName": "Flash Vessel", "matchText": "TK-702", "isMandatory": true },
+      { "itemId": "BD-EQ-003", "itemName": "Heat Recovery Unit", "matchText": "HX-701", "isMandatory": false },
+      { "itemId": "BD-EQ-004", "itemName": "Silencer", "matchText": "SL-701", "isMandatory": false }
     ]
   }
 }

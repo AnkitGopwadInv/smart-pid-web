@@ -8,12 +8,12 @@ import { Screen, navigationService } from '../services/navigation-service.js';
 import { catalogService } from '../services/catalog-service.js';
 import { sessionStateService } from '../services/session-state-service.js';
 import { eventBus } from '../services/event-bus.js';
-import { defaultWorkflowSteps } from '../models/workflow-step.js';
+import { WorkflowStep, defaultWorkflowSteps } from '../models/workflow-step.js';
 import { createPanelResizer } from '../utils/panel-resizer.js';
 
 export class Sidebar {
   constructor() {
-    this._steps = defaultWorkflowSteps.map(s => ({ ...s }));
+    this._steps = defaultWorkflowSteps.map(s => new WorkflowStep({ stepNumber: s.stepNumber, label: s.label, screen: s.screen, isActive: s.isActive, isCompleted: s.isCompleted }));
     this._container = null;
     this._contentEl = null;
     this._resizer = null;

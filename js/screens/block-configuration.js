@@ -28,6 +28,8 @@ export class BlockConfigurationScreen extends BaseScreen {
     this._saveConfirmTimer = null;
     this._rightPanelResizer = null;
     this._viewer = null;
+    this._popoverHideTimer = null;
+    this._isPopoverHovered = false;
   }
 
   render() {
@@ -35,7 +37,7 @@ export class BlockConfigurationScreen extends BaseScreen {
 
     const container = el('div', { className: 'block-config' });
 
-    // Header with breadcrumb + legend
+    // Compact header: breadcrumb + legend in single row
     const header = el('div', { className: 'block-config-header' },
       el('div', { className: 'breadcrumb' },
         el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.DivisionSelection) }, this._divisionName),
@@ -44,26 +46,21 @@ export class BlockConfigurationScreen extends BaseScreen {
         el('span', { className: 'breadcrumb-separator' }, '\u203A'),
         el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.MainHub) }, 'Configure'),
         el('span', { className: 'breadcrumb-separator' }, '\u203A'),
-        el('span', { className: 'breadcrumb-item active' }, this._blockName)
+        el('span', { className: 'breadcrumb-item active' }, this._blockName),
+        el('span', { className: 'breadcrumb-hint' }, '— Select items to include')
       ),
-      el('div', { className: 'block-config-header-row' },
-        el('div', {},
-          el('h1', { className: 'screen-title' }, this._blockName),
-          el('p', { className: 'screen-subtitle' }, 'Select items to include from each sheet')
+      el('div', { className: 'block-config-legend' },
+        el('div', { className: 'legend-item' },
+          el('div', { className: 'legend-swatch optional' }),
+          'Optional'
         ),
-        el('div', { className: 'block-config-legend' },
-          el('div', { className: 'legend-item' },
-            el('div', { className: 'legend-swatch optional' }),
-            'Optional'
-          ),
-          el('div', { className: 'legend-item' },
-            el('div', { className: 'legend-swatch selected-legend' }, '\u2713'),
-            'Selected'
-          ),
-          el('div', { className: 'legend-item' },
-            el('div', { className: 'legend-swatch mandatory-legend' }, '\uD83D\uDD12'),
-            'Mandatory'
-          )
+        el('div', { className: 'legend-item' },
+          el('div', { className: 'legend-swatch selected-legend' }, '\u2713'),
+          'Selected'
+        ),
+        el('div', { className: 'legend-item' },
+          el('div', { className: 'legend-swatch mandatory-legend' }, '\uD83D\uDD12'),
+          'Mandatory'
         )
       )
     );
@@ -80,42 +77,57 @@ export class BlockConfigurationScreen extends BaseScreen {
     // Right panel: selection list
     const rightPanel = el('div', { className: 'block-config-right' });
     this._itemCountEl = el('div', { className: 'selection-panel-count' }, '0 items on this sheet');
+    this._collapseBtn = el('button', {
+      className: 'panel-collapse-btn',
+      title: 'Collapse panel',
+      onClick: () => this._toggleRightPanel()
+    }, '\u00BB');
     const panelHeader = el('div', { className: 'selection-panel-header' },
-      el('div', { className: 'selection-panel-title' }, 'Item Selection'),
+      el('div', { className: 'selection-panel-header-top' },
+        el('div', { className: 'selection-panel-title' }, 'Item Selection'),
+        this._collapseBtn
+      ),
       this._itemCountEl
     );
     this._selectionList = el('div', { className: 'selection-list' });
     this._summaryEl = el('div', { className: 'selection-panel-summary' }, '');
     rightPanel.append(panelHeader, this._selectionList, this._summaryEl);
 
-    split.append(leftPanel, rightPanel);
+    // Detail popover (appears on hover, positioned left of right panel)
+    this._detailPopover = el('div', {
+      className: 'item-detail-popover',
+      onMouseenter: () => { this._isPopoverHovered = true; clearTimeout(this._popoverHideTimer); },
+      onMouseleave: () => { this._isPopoverHovered = false; this._scheduleHidePopover(); }
+    });
+    this._detailPopover.style.display = 'none';
 
-    // Footer
+    split.append(leftPanel, rightPanel, this._detailPopover);
+
+    // Floating action buttons (positioned inside split panel)
     this._saveConfirmEl = el('span', { className: 'save-confirmation' }, '\u2713 Saved');
-    const footer = el('div', { className: 'block-config-footer screen-footer' },
-      el('div', { className: 'block-config-footer-left' },
-        el('button', {
-          className: 'btn btn-secondary',
-          onClick: () => navigationService.navigateTo(Screen.MainHub),
-          style: { minWidth: '100px' }
-        }, '\u2190 Back'),
-        this._saveConfirmEl
-      ),
-      el('div', { className: 'block-config-footer-right' },
-        el('button', {
-          className: 'btn btn-secondary',
-          onClick: () => this._onSave(),
-          style: { minWidth: '80px' }
-        }, 'Save'),
-        el('button', {
-          className: 'btn btn-primary',
-          onClick: () => this._onSaveAndContinue(),
-          style: { minWidth: '140px' }
-        }, 'Save & Continue \u2192')
-      )
+
+    const backBtn = el('div', { className: 'floating-btn floating-btn-back' },
+      el('button', {
+        className: 'btn btn-secondary',
+        onClick: () => navigationService.navigateTo(Screen.MainHub)
+      }, '\u2190 Back'),
+      this._saveConfirmEl
     );
 
-    container.append(header, split, footer);
+    const rightBtns = el('div', { className: 'floating-btn floating-btn-right' },
+      el('button', {
+        className: 'btn btn-secondary',
+        onClick: () => this._onSave()
+      }, 'Save'),
+      el('button', {
+        className: 'btn btn-primary',
+        onClick: () => this._onSaveAndContinue()
+      }, 'Save & Continue \u2192')
+    );
+
+    split.append(backBtn, rightBtns);
+
+    container.append(header, split);
     return container;
   }
 
@@ -140,6 +152,45 @@ export class BlockConfigurationScreen extends BaseScreen {
         onResize: () => {}
       });
     }
+
+    // Auto-compact the app header on this screen; expand on hover, shrink on leave
+    this._appHeader = document.getElementById('app-header');
+    if (this._appHeader) {
+      this._appHeader.classList.add('header-compact');
+      this._headerEnter = () => this._appHeader.classList.remove('header-compact');
+      this._headerLeave = () => this._appHeader.classList.add('header-compact');
+      this._appHeader.addEventListener('mouseenter', this._headerEnter);
+      this._appHeader.addEventListener('mouseleave', this._headerLeave);
+    }
+    // Also hide progress bar on config screen
+    this._progressBar = document.querySelector('.progress-container');
+    if (this._progressBar) {
+      this._progressBar.style.display = 'none';
+    }
+  }
+
+  onUnmount() {
+    // Remove hover listeners and restore header
+    if (this._appHeader) {
+      this._appHeader.removeEventListener('mouseenter', this._headerEnter);
+      this._appHeader.removeEventListener('mouseleave', this._headerLeave);
+      this._appHeader.classList.remove('header-compact');
+    }
+    if (this._progressBar) {
+      this._progressBar.style.display = '';
+    }
+    // Clear timers
+    clearTimeout(this._popoverHideTimer);
+    clearTimeout(this._saveConfirmTimer);
+  }
+
+  _toggleRightPanel() {
+    const rightPanel = this._container?.querySelector('.block-config-right');
+    if (!rightPanel) return;
+
+    const isCollapsed = rightPanel.classList.toggle('block-config-right-collapsed');
+    this._collapseBtn.textContent = isCollapsed ? '\u00AB' : '\u00BB';
+    this._collapseBtn.title = isCollapsed ? 'Expand panel' : 'Collapse panel';
   }
 
   _loadBlockInfo() {
@@ -178,11 +229,13 @@ export class BlockConfigurationScreen extends BaseScreen {
         items.push({
           id: matched.itemId,
           text: matched.itemName,
+          matchText: matched.matchText || '',
           isMandatory: matched.isMandatory,
           isSelected: matched.isMandatory,
           confidence: matched.confidence,
           boundingBox: matched.boundingBox,
-          isHighlighted: false
+          isHighlighted: false,
+          sheetName: sheetName
         });
       }
 
@@ -191,17 +244,19 @@ export class BlockConfigurationScreen extends BaseScreen {
         items.push({
           id: unmatched.itemId,
           text: unmatched.itemName,
+          matchText: unmatched.matchText || '',
           isMandatory: unmatched.isMandatory,
           isSelected: unmatched.isMandatory,
           confidence: 0,
           boundingBox: { x: 0, y: 0, width: 0, height: 0 },
-          isHighlighted: false
+          isHighlighted: false,
+          sheetName: sheetName
         });
       }
 
       this._sheets.push({
         sheetName,
-        displayName: `Sheet ${i + 1}`,
+        displayName: sheetName,
         items
       });
     }
@@ -261,10 +316,13 @@ export class BlockConfigurationScreen extends BaseScreen {
       style: { position: 'relative', display: 'inline-block' }
     });
 
+    const currentSheet = this._sheets[this._selectedSheetIdx];
+    const sheetImageSrc = this._getSheetImageSrc();
+
     const img = document.createElement('img');
-    img.src = `assets/images/sheet-${this._blockId}.png`;
+    img.src = sheetImageSrc;
     img.style.display = 'block';
-    img.alt = `${this._blockName} - ${this._sheets[this._selectedSheetIdx]?.displayName || ''}`;
+    img.alt = `${this._blockName} - ${currentSheet?.displayName || ''}`;
 
     this._checkboxOverlay = el('div', {
       style: { position: 'absolute', top: '0', left: '0', pointerEvents: 'none' }
@@ -290,6 +348,14 @@ export class BlockConfigurationScreen extends BaseScreen {
     this._viewer = new DocumentViewer();
     const viewerEl = this._viewer.create({ content });
     this._viewerContainer.appendChild(viewerEl);
+  }
+
+  /**
+   * Get sheet image path — same PFD diagram for all tabs,
+   * checkboxes differ per tab via textract coordinates.
+   */
+  _getSheetImageSrc() {
+    return 'image.png';
   }
 
   _renderCheckboxOverlay(docWidth, docHeight) {
@@ -354,8 +420,8 @@ export class BlockConfigurationScreen extends BaseScreen {
         className: `selection-item${item.isHighlighted ? ' highlighted' : ''}`,
         dataset: { itemId: item.id },
         onClick: () => this._toggleItem(item),
-        onMouseenter: () => this._highlightItem(item.id, true),
-        onMouseleave: () => this._highlightItem(item.id, false)
+        onMouseenter: (e) => { clearTimeout(this._popoverHideTimer); this._highlightItem(item.id, true); this._showDetailPopover(item, e.currentTarget); },
+        onMouseleave: () => { this._highlightItem(item.id, false); this._scheduleHidePopover(); }
       },
         el('div', { className: checkboxClass }, checkIcon),
         el('div', {},
@@ -404,6 +470,196 @@ export class BlockConfigurationScreen extends BaseScreen {
         el.classList.toggle('highlighted', el.dataset.itemId === itemId && highlighted);
       });
     }
+  }
+
+  _showDetailPopover(item, targetEl) {
+    if (!this._detailPopover) return;
+
+    const status = item.isMandatory ? 'Mandatory' : (item.isSelected ? 'Selected' : 'Optional');
+    const statusClass = item.isMandatory ? 'mandatory' : (item.isSelected ? 'selected' : 'optional');
+    const confidenceText = item.confidence > 0 ? `${Math.round(item.confidence)}%` : 'N/A';
+    const confidenceClass = item.confidence >= 90 ? 'high' : (item.confidence >= 70 ? 'medium' : 'low');
+    const hasLocation = item.boundingBox.x !== 0 || item.boundingBox.y !== 0;
+
+    // Determine component type from sheet or ID prefix
+    const typeMap = {
+      'P&ID': 'P&ID Component',
+      'Instrument List': 'Instrument',
+      'Line List': 'Line / Pipe',
+      'Equipment List': 'Equipment'
+    };
+    const componentType = typeMap[item.sheetName] || 'Component';
+
+    // Generate mock spec properties based on component type
+    const specs = this._getComponentSpecs(item, componentType);
+
+    // Build confidence gauge bar
+    const confPct = Math.max(0, Math.min(100, Math.round(item.confidence)));
+    const gaugeBar = el('div', { className: 'popover-gauge' },
+      el('div', { className: 'popover-gauge-label' },
+        el('span', {}, 'Detection Confidence'),
+        el('span', { className: `confidence-val ${confidenceClass}` }, confidenceText)
+      ),
+      el('div', { className: 'popover-gauge-track' },
+        el('div', { className: `popover-gauge-fill ${confidenceClass}`, style: { width: `${confPct}%` } })
+      )
+    );
+
+    // Build mini bar chart for analysis metrics
+    const metrics = this._getAnalysisMetrics(item);
+    const chartBars = metrics.map(m =>
+      el('div', { className: 'popover-chart-col' },
+        el('div', { className: 'popover-chart-bar-wrap' },
+          el('div', { className: `popover-chart-bar ${m.colorClass}`, style: { height: `${m.value}%` } })
+        ),
+        el('div', { className: 'popover-chart-label' }, m.label)
+      )
+    );
+    const chart = el('div', { className: 'popover-chart' },
+      el('div', { className: 'popover-section-title' }, 'Analysis Metrics'),
+      el('div', { className: 'popover-chart-bars' }, ...chartBars)
+    );
+
+    this._detailPopover.innerHTML = '';
+    this._detailPopover.append(
+      el('div', { className: 'detail-popover-header' },
+        el('div', {},
+          el('div', { className: 'detail-popover-name' }, item.text),
+          el('div', { className: 'detail-popover-subtitle' }, componentType)
+        ),
+        el('div', { className: `detail-popover-status ${statusClass}` }, status)
+      ),
+      el('div', { className: 'detail-popover-body' },
+        // Properties section
+        el('div', { className: 'popover-section' },
+          el('div', { className: 'popover-section-title' }, 'Identification'),
+          this._propRow('Item ID', item.id),
+          this._propRow('Tag / Ref', item.matchText || '-'),
+          this._propRow('Sheet', item.sheetName),
+          this._propRow('Location', hasLocation
+            ? `X: ${(item.boundingBox.x * 100).toFixed(1)}%  Y: ${(item.boundingBox.y * 100).toFixed(1)}%`
+            : 'Not detected')
+        ),
+        // Specs section
+        el('div', { className: 'popover-section' },
+          el('div', { className: 'popover-section-title' }, 'Specifications'),
+          ...specs.map(s => this._propRow(s.label, s.value))
+        ),
+        // Confidence gauge
+        gaugeBar,
+        // Analysis bar chart
+        chart
+      )
+    );
+
+    // Position popover to the left of the right panel, centered vertically on hovered item
+    const splitRect = this._detailPopover.parentElement.getBoundingClientRect();
+    const targetRect = targetEl.getBoundingClientRect();
+    const rightPanel = this._container?.querySelector('.block-config-right');
+    const rightRect = rightPanel?.getBoundingClientRect();
+
+    this._detailPopover.style.display = 'block';
+
+    // Center popover vertically relative to the hovered item
+    const popoverHeight = this._detailPopover.offsetHeight;
+    const targetCenter = targetRect.top + targetRect.height / 2 - splitRect.top;
+    let topPos = targetCenter - popoverHeight / 2;
+
+    // Keep within split bounds
+    if (topPos + popoverHeight > splitRect.height - 8) {
+      topPos = splitRect.height - popoverHeight - 8;
+    }
+    if (topPos < 8) topPos = 8;
+
+    this._detailPopover.style.top = `${topPos}px`;
+    // Position to the left of the right panel
+    if (rightRect) {
+      this._detailPopover.style.right = `${splitRect.right - rightRect.left + 8}px`;
+    }
+  }
+
+  _scheduleHidePopover() {
+    clearTimeout(this._popoverHideTimer);
+    this._popoverHideTimer = setTimeout(() => {
+      if (!this._isPopoverHovered) {
+        this._detailPopover.style.display = 'none';
+      }
+    }, 150);
+  }
+
+  _hideDetailPopover() {
+    clearTimeout(this._popoverHideTimer);
+    this._isPopoverHovered = false;
+    if (this._detailPopover) {
+      this._detailPopover.style.display = 'none';
+    }
+  }
+
+  /** Generate mock specification properties based on component type */
+  _getComponentSpecs(item, componentType) {
+    // Seed a simple deterministic hash from item ID for consistent mock values
+    const hash = item.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+
+    if (componentType === 'Instrument') {
+      const ranges = ['0-100 PSI', '0-500\u00B0F', '0-10 m', '4-20 mA', '0-300 PSI'];
+      const classes = ['Class A', 'Class B', 'Class C'];
+      return [
+        { label: 'Range', value: ranges[hash % ranges.length] },
+        { label: 'Accuracy', value: `\u00B1${(0.1 + (hash % 5) * 0.15).toFixed(2)}%` },
+        { label: 'Class', value: classes[hash % classes.length] },
+        { label: 'Signal', value: hash % 2 === 0 ? '4-20 mA' : 'HART' }
+      ];
+    } else if (componentType === 'Line / Pipe') {
+      const sizes = ['2"', '3"', '4"', '6"', '8"'];
+      const materials = ['CS A106 Gr.B', 'SS 304L', 'SS 316L', 'CS A53 Gr.B'];
+      const schedules = ['Sch 40', 'Sch 80', 'Sch 160', 'Sch STD'];
+      return [
+        { label: 'Size', value: sizes[hash % sizes.length] },
+        { label: 'Material', value: materials[hash % materials.length] },
+        { label: 'Schedule', value: schedules[hash % schedules.length] },
+        { label: 'Insulation', value: hash % 3 === 0 ? 'Hot (H)' : hash % 3 === 1 ? 'Cold (C)' : 'None' }
+      ];
+    } else if (componentType === 'Equipment') {
+      const pressures = ['150#', '300#', '600#'];
+      const materials = ['SA-516 Gr.70', 'SA-240 304', 'SA-387 Gr.11'];
+      return [
+        { label: 'Design Pres.', value: `${50 + (hash % 8) * 50} PSI` },
+        { label: 'Design Temp.', value: `${200 + (hash % 6) * 75}\u00B0F` },
+        { label: 'Rating', value: pressures[hash % pressures.length] },
+        { label: 'Material', value: materials[hash % materials.length] }
+      ];
+    } else {
+      // P&ID Component
+      const sizes = ['2"', '4"', '6"', '8"', '10"'];
+      const ratings = ['150#', '300#', '600#'];
+      return [
+        { label: 'Size', value: sizes[hash % sizes.length] },
+        { label: 'Rating', value: ratings[hash % ratings.length] },
+        { label: 'Design Pres.', value: `${100 + (hash % 10) * 50} PSI` },
+        { label: 'Design Temp.', value: `${250 + (hash % 8) * 50}\u00B0F` }
+      ];
+    }
+  }
+
+  /** Generate analysis metrics for bar chart */
+  _getAnalysisMetrics(item) {
+    const hash = item.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    return [
+      { label: 'OCR', value: Math.min(100, Math.max(20, Math.round(item.confidence))), colorClass: 'bar-ocr' },
+      { label: 'Match', value: item.confidence > 0 ? Math.min(100, Math.round(item.confidence * 0.95 + (hash % 10))) : 15, colorClass: 'bar-match' },
+      { label: 'Valid', value: item.isMandatory ? 100 : Math.min(100, 60 + (hash % 40)), colorClass: 'bar-valid' },
+      { label: 'Compl', value: item.isSelected ? Math.min(100, 75 + (hash % 25)) : 30, colorClass: 'bar-compl' }
+    ];
+  }
+
+  _propRow(label, value) {
+    const valEl = typeof value === 'string'
+      ? el('div', { className: 'detail-prop-value' }, value)
+      : el('div', { className: 'detail-prop-value' }, value);
+    return el('div', { className: 'detail-prop-row' },
+      el('div', { className: 'detail-prop-label' }, label),
+      valEl
+    );
   }
 
   _updateSummary() {

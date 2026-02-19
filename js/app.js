@@ -7,6 +7,7 @@ import { navigationService, Screen } from './services/navigation-service.js';
 import { catalogService } from './services/catalog-service.js';
 import { mockDataService } from './services/mock-data-service.js';
 import { Sidebar } from './components/sidebar.js';
+import { RevisionHeader } from './components/revision-header.js';
 import { DivisionSelectionScreen } from './screens/division-selection.js';
 import { ProductSelectionScreen } from './screens/product-selection.js';
 import { PfdBlockSelectionScreen } from './screens/pfd-block-selection.js';
@@ -16,27 +17,37 @@ import { BlockConfigurationScreen } from './screens/block-configuration.js';
 class App {
   constructor() {
     this._sidebar = new Sidebar();
+    this._revisionHeader = new RevisionHeader();
     this._currentScreen = null;
     this._contentEl = null;
-    this._statusEl = null;
     this._progressFill = null;
+    this._headerEl = null;
+    this._headerCompact = false;
+    this._scrollAccum = 0;
+    this._shrinkCooldown = false;
   }
 
   async init() {
     // Get DOM elements
     this._contentEl = document.getElementById('content');
-    this._statusEl = document.getElementById('status-text');
     this._progressFill = document.getElementById('progress-fill');
+    this._headerEl = document.getElementById('app-header');
 
     // Render sidebar
     const sidebarEl = document.getElementById('sidebar');
     this._sidebar.render(sidebarEl);
 
+    // Render revision header
+    const revisionEl = document.getElementById('revision-section');
+    if (revisionEl) this._revisionHeader.render(revisionEl);
+
+    // Header shrink on scroll (with debounce to prevent flicker)
+    this._setupHeaderShrink();
+
     // Load catalog data
-    this._setStatus('Loading catalog...');
     const result = await catalogService.loadCatalog();
     if (!result.isSuccess) {
-      this._setStatus(`Error: ${result.error}`);
+      console.error('Failed to load catalog:', result.error);
     }
 
     // Load mock data
@@ -47,7 +58,6 @@ class App {
 
     // Mount initial screen
     this._onScreenChanged(Screen.DivisionSelection);
-    this._setStatus('Ready');
   }
 
   _onScreenChanged(screen) {
@@ -74,16 +84,6 @@ class App {
     this._currentScreen = createScreen();
     this._currentScreen.mount(this._contentEl);
 
-    // Update status
-    const screenNames = {
-      [Screen.DivisionSelection]: 'Step 1: Division Selection',
-      [Screen.ProductSelection]: 'Step 2: Product Selection',
-      [Screen.PfdBlockSelection]: 'Step 3: PFD Block Selection',
-      [Screen.MainHub]: 'Step 4: Main Hub - Configure Blocks',
-      [Screen.BlockConfiguration]: 'Step 5: Block Configuration'
-    };
-    this._setStatus(screenNames[screen] || screen);
-
     // Update progress bar
     const screenOrder = [
       Screen.DivisionSelection,
@@ -97,12 +97,68 @@ class App {
     if (this._progressFill) {
       this._progressFill.style.width = `${progressPercent}%`;
     }
+
+    // Reset header on screen change
+    this._setHeaderCompact(false);
+    this._scrollAccum = 0;
   }
 
-  _setStatus(text) {
-    if (this._statusEl) {
-      this._statusEl.textContent = text;
-    }
+  /**
+   * Header shrink/expand with scroll accumulation + cooldown to prevent flicker.
+   * - Requires 60px of sustained scroll-down before shrinking
+   * - Requires 40px of sustained scroll-up before expanding
+   * - 300ms cooldown after each state change
+   * - Hover on header expands immediately
+   */
+  _setupHeaderShrink() {
+    const header = this._headerEl;
+    if (!header) return;
+
+    // Hover always expands
+    header.addEventListener('mouseenter', () => {
+      this._setHeaderCompact(false);
+      this._scrollAccum = 0;
+    });
+
+    // Capture scroll on any descendant of content
+    this._contentEl.addEventListener('scroll', (e) => {
+      const t = e.target;
+      const scrollTop = t.scrollTop || 0;
+      const last = t._lastScrollY || 0;
+      const delta = scrollTop - last;
+      t._lastScrollY = scrollTop;
+
+      if (this._shrinkCooldown) return;
+
+      // Accumulate in the current direction; reset if direction changes
+      if ((delta > 0 && this._scrollAccum < 0) || (delta < 0 && this._scrollAccum > 0)) {
+        this._scrollAccum = 0;
+      }
+      this._scrollAccum += delta;
+
+      // Shrink after 60px sustained down-scroll (and past 50px from top)
+      if (!this._headerCompact && this._scrollAccum > 60 && scrollTop > 50) {
+        this._setHeaderCompact(true);
+        this._startCooldown();
+      }
+      // Expand after 40px sustained up-scroll
+      else if (this._headerCompact && this._scrollAccum < -40) {
+        this._setHeaderCompact(false);
+        this._startCooldown();
+      }
+    }, true);
+  }
+
+  _setHeaderCompact(compact) {
+    if (!this._headerEl || this._headerCompact === compact) return;
+    this._headerCompact = compact;
+    this._headerEl.classList.toggle('header-compact', compact);
+  }
+
+  _startCooldown() {
+    this._shrinkCooldown = true;
+    this._scrollAccum = 0;
+    setTimeout(() => { this._shrinkCooldown = false; }, 300);
   }
 }
 

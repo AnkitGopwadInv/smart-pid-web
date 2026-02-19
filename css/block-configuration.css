@@ -1,27 +1,40 @@
 /* Screen 5: Block Configuration - ESP Theme */
 
 .block-config {
-  padding: var(--space-xl);
+  padding: 8px 12px;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .block-config-header {
-  margin-bottom: var(--space-lg);
+  margin-bottom: 6px;
   flex-shrink: 0;
-}
-
-.block-config-header-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+}
+
+.block-config-header .breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.breadcrumb-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-left: 8px;
+  font-style: italic;
+  white-space: nowrap;
 }
 
 .block-config-legend {
   display: flex;
   align-items: center;
-  gap: var(--space-lg);
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .legend-item {
@@ -59,7 +72,7 @@
   gap: var(--space-md);
   flex: 1;
   min-height: 0;
-  margin-bottom: var(--space-lg);
+  position: relative;
 }
 
 /* Left panel: tabs + document */
@@ -151,11 +164,38 @@
   flex-shrink: 0;
 }
 
+.selection-panel-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .selection-panel-title {
   font-size: var(--font-size-xl);
   font-weight: 600;
   color: var(--text-inverse);
   margin-bottom: 4px;
+}
+
+.panel-collapse-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.panel-collapse-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .selection-panel-count {
@@ -233,17 +273,37 @@
   flex-shrink: 0;
 }
 
-/* Footer */
-.block-config-footer {
+/* Floating action buttons */
+.floating-btn {
+  position: absolute;
+  z-index: 50;
+  bottom: 8px;
   display: flex;
   align-items: center;
-  flex-shrink: 0;
+  gap: 8px;
 }
 
-.block-config-footer-left {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
+.floating-btn .btn {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+  padding: 6px 14px;
+}
+
+.floating-btn .btn:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.floating-btn-back {
+  left: 10px;
+}
+
+.floating-btn-right {
+  right: 312px; /* left side of right panel (300px width + 12px gap) */
+}
+
+/* When right panel is collapsed, shift buttons closer */
+.block-config-split:has(.block-config-right-collapsed) .floating-btn-right {
+  right: 54px; /* 42px collapsed width + 12px gap */
 }
 
 .save-confirmation {
@@ -257,11 +317,254 @@
   opacity: 1;
 }
 
-.block-config-footer-right {
+/* Item Detail Popover */
+.item-detail-popover {
+  position: absolute;
+  z-index: 100;
+  width: 360px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18), 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  pointer-events: auto;
+  animation: popoverFadeIn 0.18s ease;
+}
+
+@keyframes popoverFadeIn {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.detail-popover-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.detail-popover-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+}
+
+.detail-popover-subtitle {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.detail-popover-status {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.detail-popover-status.mandatory {
+  background: rgba(5, 150, 105, 0.9);
+  color: white;
+}
+
+.detail-popover-status.selected {
+  background: rgba(8, 145, 178, 0.9);
+  color: white;
+}
+
+.detail-popover-status.optional {
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+}
+
+/* Popover body */
+.detail-popover-body {
+  max-height: 480px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* Sections */
+.popover-section {
+  padding: 6px 0 4px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.popover-section:last-child {
+  border-bottom: none;
+}
+
+.popover-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--accent-color);
+  padding: 4px 18px 4px;
+}
+
+.detail-prop-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-left: auto;
+  padding: 5px 18px;
+}
+
+.detail-prop-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  width: 88px;
+  flex-shrink: 0;
+}
+
+.detail-prop-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+/* Confidence gauge */
+.popover-gauge {
+  padding: 10px 18px 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.popover-gauge-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--accent-color);
+}
+
+.popover-gauge-track {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.popover-gauge-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.popover-gauge-fill.high {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.popover-gauge-fill.medium {
+  background: linear-gradient(90deg, #fbbf24, #d97706);
+}
+
+.popover-gauge-fill.low {
+  background: linear-gradient(90deg, #f87171, #dc2626);
+}
+
+/* Confidence badge */
+.confidence-val {
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.confidence-val.high {
+  color: #059669;
+  background: #ecfdf5;
+}
+
+.confidence-val.medium {
+  color: #d97706;
+  background: #fffbeb;
+}
+
+.confidence-val.low {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+/* Mini bar chart */
+.popover-chart {
+  padding: 8px 18px 14px;
+}
+
+.popover-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 70px;
+  margin-top: 8px;
+  padding: 0 4px;
+}
+
+.popover-chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.popover-chart-bar-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.popover-chart-bar {
+  width: 100%;
+  max-width: 28px;
+  border-radius: 3px 3px 0 0;
+  transition: height 0.3s ease;
+  min-height: 4px;
+}
+
+.popover-chart-bar.bar-ocr {
+  background: linear-gradient(180deg, #06b6d4, #0891b2);
+}
+
+.popover-chart-bar.bar-match {
+  background: linear-gradient(180deg, #8b5cf6, #7c3aed);
+}
+
+.popover-chart-bar.bar-valid {
+  background: linear-gradient(180deg, #10b981, #059669);
+}
+
+.popover-chart-bar.bar-compl {
+  background: linear-gradient(180deg, #f59e0b, #d97706);
+}
+
+.popover-chart-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-top: 5px;
+  text-align: center;
 }
 
 /* Right panel collapsed state */
@@ -270,7 +573,17 @@
   min-width: 42px !important;
 }
 
-.block-config-right-collapsed .selection-panel-header,
+.block-config-right-collapsed .selection-panel-header {
+  padding: 8px 7px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+}
+
+.block-config-right-collapsed .selection-panel-header-top {
+  justify-content: center;
+}
+
+.block-config-right-collapsed .selection-panel-title,
+.block-config-right-collapsed .selection-panel-count,
 .block-config-right-collapsed .selection-list,
 .block-config-right-collapsed .selection-panel-summary {
   display: none;
@@ -283,9 +596,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  flex: 1;
   font-size: 12px;
   font-weight: 600;
   color: var(--text-secondary);
   letter-spacing: 1px;
+  cursor: pointer;
 }
