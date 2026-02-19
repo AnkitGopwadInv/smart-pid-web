@@ -61,6 +61,18 @@ export class Sidebar {
     // Listen for screen changes & configuration changes
     eventBus.on('screen:changed', () => this._onStateChanged());
     eventBus.on('configuration:changed', () => this._onStateChanged());
+
+    // Listen for collapse/expand requests from screens
+    eventBus.on('sidebar:collapse', () => {
+      if (!this._container.classList.contains('sidebar-collapsed')) {
+        this._resizer?.toggle();
+      }
+    });
+    eventBus.on('sidebar:expand', () => {
+      if (this._container.classList.contains('sidebar-collapsed')) {
+        this._resizer?.toggle();
+      }
+    });
   }
 
   _onStateChanged() {

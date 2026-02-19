@@ -122,11 +122,21 @@ export class MainHubScreen extends BaseScreen {
     this._loadBlocks();
     const unsub = eventBus.on('configuration:changed', () => this._updateProgress());
     this._unsubscribes.push(unsub);
+
+    // Auto-collapse both sidebars on Step 4
+    eventBus.emit('sidebar:collapse');
+    // Collapse right panel by default
+    const rightPanel = this._container?.querySelector('.main-hub-right');
+    if (rightPanel && !rightPanel.classList.contains('main-hub-right-collapsed')) {
+      this._toggleRightPanel();
+    }
   }
 
   onUnmount() {
     this._unsubscribes.forEach(fn => fn());
     this._unsubscribes = [];
+    // Restore left sidebar when leaving
+    eventBus.emit('sidebar:expand');
   }
 
   _toggleRightPanel() {

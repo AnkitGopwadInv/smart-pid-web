@@ -167,6 +167,9 @@ export class BlockConfigurationScreen extends BaseScreen {
     if (this._progressBar) {
       this._progressBar.style.display = 'none';
     }
+
+    // Auto-collapse both sidebars on Step 5
+    eventBus.emit('sidebar:collapse');
   }
 
   onUnmount() {
@@ -179,6 +182,8 @@ export class BlockConfigurationScreen extends BaseScreen {
     if (this._progressBar) {
       this._progressBar.style.display = '';
     }
+    // Restore left sidebar
+    eventBus.emit('sidebar:expand');
     // Clear timers
     clearTimeout(this._popoverHideTimer);
     clearTimeout(this._saveConfirmTimer);
