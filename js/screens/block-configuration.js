@@ -356,11 +356,10 @@ export class BlockConfigurationScreen extends BaseScreen {
   }
 
   /**
-   * Get sheet image path — same PFD diagram for all tabs,
-   * checkboxes differ per tab via textract coordinates.
+   * Get sheet image path for the current block and active tab.
    */
   _getSheetImageSrc() {
-    return 'image.png';
+    return `assets/images/sheet-${this._blockId}-${this._selectedSheetIdx}.png`;
   }
 
   _renderCheckboxOverlay(docWidth, docHeight) {
