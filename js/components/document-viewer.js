@@ -64,8 +64,8 @@ export class DocumentViewer {
       }, '+'),
       el('button', {
         className: 'zoom-btn zoom-btn-text',
-        title: 'Fit to width',
-        onClick: () => this._fitToWidth()
+        title: 'Fit full image in view',
+        onClick: () => this._fitToView()
       }, 'Fit'),
       el('button', {
         className: 'zoom-btn zoom-btn-text',
@@ -91,10 +91,10 @@ export class DocumentViewer {
     document.addEventListener('mousemove', this._boundMouseMove);
     document.addEventListener('mouseup', this._boundMouseUp);
 
-    // Double-click = reset zoom
+    // Double-click = fit full image in view
     this._container.addEventListener('dblclick', (e) => {
       if (e.target.closest('.configure-btn-item') || e.target.closest('.checkbox-overlay-item')) return;
-      this._setZoom(1.0);
+      this._fitToView();
     });
 
     // Fullscreen
@@ -102,13 +102,13 @@ export class DocumentViewer {
 
     this._wrapper.append(controls, this._container);
 
-    // Apply initial zoom after image loads
+    // Apply initial zoom: fit full image in view
     if (content) {
       const img = content.querySelector('img');
       if (img) {
-        const apply = () => this._applyZoom();
-        img.addEventListener('load', apply);
-        if (img.complete && img.naturalWidth > 0) apply();
+        const fitInitial = () => this._fitToView();
+        img.addEventListener('load', fitInitial);
+        if (img.complete && img.naturalWidth > 0) fitInitial();
       }
     }
 
@@ -167,12 +167,16 @@ export class DocumentViewer {
     }
   }
 
-  _fitToWidth() {
+  _fitToView() {
     if (!this._container || !this._contentEl) return;
     const img = this._contentEl.querySelector('img');
     if (!img || !img.naturalWidth) return;
     const containerWidth = this._container.clientWidth;
-    const fitZoom = (containerWidth - 10) / img.naturalWidth;
+    const containerHeight = this._container.clientHeight;
+    const fitW = (containerWidth - 10) / img.naturalWidth;
+    const fitH = (containerHeight - 10) / img.naturalHeight;
+    // Use the smaller ratio so the full image fits in both dimensions
+    const fitZoom = Math.min(fitW, fitH);
     this._setZoom(fitZoom);
   }
 

@@ -1,4 +1,4 @@
-/* Screen 2: Product Selection - Card Grid with Icons */
+/* Screen 2: Product Selection - Compact Tile Grid */
 
 .product-header-icon {
   display: flex;
@@ -12,139 +12,134 @@
   height: 28px;
 }
 
-/* Product card grid */
+/* Product card grid - compact */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px 4px;
   padding: 4px;
   overflow-y: auto;
   flex: 1;
+  align-content: start;
 }
 
-/* Product card */
-.product-card {
+/* Compact product card */
+.product-card.compact {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
+  gap: 10px;
+  padding: 4px 10px;
+  height: 62px;
   background: var(--card-bg);
-  border: 2px solid var(--border-light);
+  border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.product-card:hover {
+.product-card.compact:hover {
   border-color: var(--accent-color);
   background: var(--accent-light);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.12);
+  box-shadow: 0 2px 8px rgba(8, 145, 178, 0.12);
 }
 
-.product-card.selected {
+.product-card.compact.selected {
   border-color: var(--accent-color);
   background: var(--accent-light);
-  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
+  box-shadow: 0 0 0 2px rgba(8, 145, 178, 0.15);
 }
 
-.product-card.disabled {
+.product-card.compact.disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.product-card.disabled:hover {
+.product-card.compact.disabled:hover {
   border-color: var(--border-light);
   background: var(--card-bg);
-  transform: none;
   box-shadow: none;
 }
 
-/* Icon */
-.product-card-icon {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
+/* Icon - smaller for compact */
+.product-card.compact .product-card-icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-  border-radius: var(--radius-md);
+  border-radius: 6px;
   color: white;
-  padding: 8px;
+  padding: 6px;
 }
 
-.product-card-icon svg {
-  width: 24px;
-  height: 24px;
+.product-card.compact .product-card-icon svg {
+  width: 20px;
+  height: 20px;
   stroke: white;
 }
 
-.product-card.disabled .product-card-icon {
+.product-card.compact.disabled .product-card-icon {
   background: var(--border-default);
 }
 
-/* Body */
-.product-card-body {
+/* Body - compact */
+.product-card.compact .product-card-body {
   flex: 1;
   min-width: 0;
 }
 
-.product-card-name {
-  font-size: 14px;
+.product-card.compact .product-card-name {
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 2px;
-}
-
-.product-card-desc {
-  font-size: 11px;
-  color: var(--text-secondary);
+  line-height: 1.3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 4px;
 }
 
-.product-card-meta {
+.product-card.compact .product-card-meta {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  margin-top: 2px;
 }
 
-.product-card-badge {
-  font-size: 10px;
+.product-card.compact .product-card-badge {
+  font-size: 9px;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
   background: #dbeafe;
   color: var(--primary-color);
 }
 
-.product-card-badge.empty {
+.product-card.compact .product-card-badge.empty {
   background: var(--border-light);
   color: var(--text-muted);
 }
 
-/* Arrow */
-.product-card-arrow {
-  font-size: 20px;
+/* Arrow - compact */
+.product-card.compact .product-card-arrow {
+  font-size: 16px;
   color: var(--text-muted);
   font-weight: 300;
   transition: color 0.15s ease;
 }
 
-.product-card:hover .product-card-arrow {
+.product-card.compact:hover .product-card-arrow {
   color: var(--accent-color);
 }
 
-.product-card.disabled .product-card-arrow {
+.product-card.compact.disabled .product-card-arrow {
   display: none;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
   .product-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
 }

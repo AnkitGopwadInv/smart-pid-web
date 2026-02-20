@@ -92,8 +92,9 @@ class App {
       this._progressFill.style.width = `${progressPercent}%`;
     }
 
-    // Reset header on screen change
-    this._setHeaderCompact(false);
+    // Header: full on step 1, compact on all other steps
+    const isStep1 = screen === Screen.DivisionSelection;
+    this._setHeaderCompact(!isStep1);
     this._scrollAccum = 0;
   }
 
@@ -108,10 +109,17 @@ class App {
     const header = this._headerEl;
     if (!header) return;
 
-    // Hover always expands
+    // Hover expands, mouseleave restores compact (except on step 1)
     header.addEventListener('mouseenter', () => {
       this._setHeaderCompact(false);
       this._scrollAccum = 0;
+    });
+    header.addEventListener('mouseleave', () => {
+      // Re-compact if not on step 1
+      const isStep1 = navigationService.currentScreen === Screen.DivisionSelection;
+      if (!isStep1) {
+        this._setHeaderCompact(true);
+      }
     });
 
     // Capture scroll on any descendant of content

@@ -43,17 +43,18 @@ export class PfdBlockSelectionScreen extends BaseScreen {
 
     const container = el('div', { className: 'screen' });
 
-    // Header
-    const header = el('div', { className: 'screen-header' },
-      el('div', { className: 'breadcrumb' },
-        el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.DivisionSelection) }, division?.name || ''),
-        el('span', { className: 'breadcrumb-separator' }, '\u203A'),
-        el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.ProductSelection) }, product?.name || ''),
-        el('span', { className: 'breadcrumb-separator' }, '\u203A'),
-        el('span', { className: 'breadcrumb-item active' }, 'Select Blocks')
-      ),
-      el('h1', { className: 'screen-title' }, 'Select PFD Blocks'),
-      el('p', { className: 'screen-subtitle' }, 'Choose the blocks to include in your P&ID configuration')
+    // Header - compact
+    const header = el('div', { className: 'screen-header compact-header' },
+      el('div', { className: 'compact-header-row' },
+        el('div', { className: 'breadcrumb' },
+          el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.DivisionSelection) }, division?.name || ''),
+          el('span', { className: 'breadcrumb-separator' }, '\u203A'),
+          el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.ProductSelection) }, product?.name || ''),
+          el('span', { className: 'breadcrumb-separator' }, '\u203A'),
+          el('span', { className: 'breadcrumb-item active' }, 'Select Blocks')
+        ),
+        el('h1', { className: 'screen-title' }, 'Select PFD Blocks')
+      )
     );
 
     // Summary bar
@@ -81,23 +82,30 @@ export class PfdBlockSelectionScreen extends BaseScreen {
     // Block grid
     this._grid = el('div', { className: 'pfd-block-grid screen-body' });
 
-    // Footer
+    // Block grid wrapper (relative positioned for floating buttons)
+    this._gridWrapper = el('div', { className: 'pfd-grid-wrapper' });
+
+    // Floating action buttons (like step 5)
+    const backBtn = el('div', { className: 'floating-btn floating-btn-back' },
+      el('button', {
+        className: 'btn btn-secondary',
+        onClick: () => navigationService.navigateTo(Screen.ProductSelection)
+      }, '\u2190 Back')
+    );
+
     this._continueBtn = el('button', {
       className: 'btn btn-primary',
       disabled: 'disabled',
-      onClick: () => this._onContinue(),
-      style: { minWidth: '140px' }
+      onClick: () => this._onContinue()
     }, 'Continue \u2192');
 
-    const backBtn = el('button', {
-      className: 'btn btn-secondary',
-      onClick: () => navigationService.navigateTo(Screen.ProductSelection),
-      style: { minWidth: '100px' }
-    }, '\u2190 Back');
+    const rightBtns = el('div', { className: 'floating-btn pfd-floating-btn-right' },
+      this._continueBtn
+    );
 
-    const footer = el('div', { className: 'screen-footer' }, backBtn, this._continueBtn);
+    this._gridWrapper.append(this._grid, backBtn, rightBtns);
 
-    container.append(header, summaryBar, this._grid, footer);
+    container.append(header, summaryBar, this._gridWrapper);
     return container;
   }
 
@@ -151,7 +159,7 @@ export class PfdBlockSelectionScreen extends BaseScreen {
     );
 
     const card = el('div', {
-      className: `pfd-block-card${block.isMandatory ? ' mandatory' : ''}${block.isSelected ? ' selected' : ''}`,
+      className: `pfd-block-card compact${block.isMandatory ? ' mandatory' : ''}${block.isSelected ? ' selected' : ''}`,
       tabindex: '0',
       role: 'checkbox',
       'aria-checked': String(block.isSelected),
@@ -164,16 +172,14 @@ export class PfdBlockSelectionScreen extends BaseScreen {
         }
       }
     },
-      el('div', { className: 'pfd-block-card-top' },
-        el('div', { className: `pfd-block-icon${block.isMandatory ? ' mandatory' : ''}`, htmlContent: iconSvg }),
-        checkbox
-      ),
+      el('div', { className: `pfd-block-icon${block.isMandatory ? ' mandatory' : ''}`, htmlContent: iconSvg }),
       el('div', { className: 'pfd-block-card-body' },
         el('div', { className: 'pfd-block-name' }, block.name),
         block.isMandatory
           ? el('span', { className: 'pfd-block-badge mandatory' }, 'Required')
           : el('span', { className: 'pfd-block-badge optional' }, 'Optional')
-      )
+      ),
+      checkbox
     );
 
     return card;

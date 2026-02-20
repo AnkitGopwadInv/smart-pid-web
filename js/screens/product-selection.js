@@ -44,20 +44,14 @@ export class ProductSelectionScreen extends BaseScreen {
 
     const container = el('div', { className: 'screen' });
 
-    const header = el('div', { className: 'screen-header' },
-      el('div', { className: 'breadcrumb' },
-        el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.DivisionSelection) }, divisionName),
-        el('span', { className: 'breadcrumb-separator' }, '\u203A'),
-        el('span', { className: 'breadcrumb-item active' }, 'Select Product')
-      ),
-      el('div', { className: 'product-header-icon' },
-        el('span', { htmlContent: getIconSvg(division?.icon, iconColor), style: { width: '28px', height: '28px', display: 'inline-flex' } }),
-        el('h1', { className: 'screen-title', style: { marginBottom: '0' } }, 'Select Product')
-      ),
-      el('p', { className: 'screen-subtitle' },
-        `Choose a product from the `,
-        el('strong', {}, divisionName),
-        ` division`
+    const header = el('div', { className: 'screen-header compact-header' },
+      el('div', { className: 'compact-header-row' },
+        el('div', { className: 'breadcrumb' },
+          el('span', { className: 'breadcrumb-item clickable', onClick: () => navigationService.navigateTo(Screen.DivisionSelection) }, divisionName),
+          el('span', { className: 'breadcrumb-separator' }, '\u203A'),
+          el('span', { className: 'breadcrumb-item active' }, 'Select Product')
+        ),
+        el('h1', { className: 'screen-title' }, 'Select Product')
       )
     );
 
@@ -101,7 +95,7 @@ export class ProductSelectionScreen extends BaseScreen {
     const iconSvg = getProductIcon(product.id);
 
     const card = el('div', {
-      className: `product-card${hasBlocks ? '' : ' disabled'}`,
+      className: `product-card compact${hasBlocks ? '' : ' disabled'}`,
       tabindex: hasBlocks ? '0' : '-1',
       role: 'option',
       dataset: { productId: product.id },
@@ -118,10 +112,9 @@ export class ProductSelectionScreen extends BaseScreen {
       el('div', { className: 'product-card-icon', htmlContent: iconSvg }),
       el('div', { className: 'product-card-body' },
         el('div', { className: 'product-card-name' }, product.name),
-        el('div', { className: 'product-card-desc' }, product.description || ''),
         el('div', { className: 'product-card-meta' },
           blockCount > 0
-            ? el('span', { className: 'product-card-badge' }, `${blockCount} PFD Blocks`)
+            ? el('span', { className: 'product-card-badge' }, `${blockCount} Blocks`)
             : el('span', { className: 'product-card-badge empty' }, 'No blocks')
         )
       ),

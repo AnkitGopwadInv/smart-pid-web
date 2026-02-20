@@ -176,6 +176,33 @@
   flex-shrink: 0;
 }
 
+/* Compact header for steps 2 & 3 - inline breadcrumb + title */
+.compact-header {
+  margin-bottom: 6px !important;
+  padding-bottom: 0;
+}
+
+.compact-header-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.compact-header .screen-title {
+  font-size: 16px;
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+.compact-header .breadcrumb {
+  margin-bottom: 0;
+  font-size: 11px;
+}
+
+.compact-header .breadcrumb-separator {
+  margin: 0 4px;
+}
+
 /* Error panel */
 .error-panel {
   background: var(--bg-error);

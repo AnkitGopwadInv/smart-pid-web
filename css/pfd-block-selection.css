@@ -1,4 +1,4 @@
-/* Screen 3: PFD Block Selection - Card Grid with Icons */
+/* Screen 3: PFD Block Selection - Compact Tile Grid */
 
 /* Summary bar */
 .pfd-summary-bar {
@@ -8,21 +8,21 @@
   background: var(--card-bg);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 10px 20px;
-  margin-bottom: 12px;
+  padding: 6px 14px;
+  margin-bottom: 6px;
   flex-shrink: 0;
 }
 
 .pfd-summary-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   flex: 1;
   justify-content: center;
 }
 
 .pfd-summary-label {
-  font-size: 12px;
+  font-size: 10px;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -30,166 +30,128 @@
 }
 
 .pfd-summary-value {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--accent-color);
 }
 
 .pfd-summary-divider {
   width: 1px;
-  height: 28px;
+  height: 20px;
   background: var(--border-default);
-  margin: 0 8px;
+  margin: 0 4px;
 }
 
-/* Block card grid */
-.pfd-block-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-  padding: 4px;
-  overflow-y: auto;
+/* Grid wrapper - relative for floating buttons */
+.pfd-grid-wrapper {
   flex: 1;
-}
-
-/* Block card */
-.pfd-block-card {
+  min-height: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
+}
+
+/* Block card grid - compact */
+.pfd-block-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px 4px;
+  padding: 4px;
+  padding-bottom: 42px;
+  overflow-y: auto;
+  flex: 1;
+  align-content: start;
+}
+
+/* Compact block card - horizontal layout */
+.pfd-block-card.compact {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  height: 62px;
   background: var(--card-bg);
-  border: 2px solid var(--border-light);
+  border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
+  flex-direction: row;
 }
 
-.pfd-block-card:hover:not(.mandatory) {
+.pfd-block-card.compact:hover:not(.mandatory) {
   border-color: var(--accent-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.15);
+  box-shadow: 0 2px 8px rgba(8, 145, 178, 0.15);
 }
 
-.pfd-block-card.selected {
+.pfd-block-card.compact.selected {
   border-color: var(--accent-color);
   background: var(--accent-light);
 }
 
-.pfd-block-card.mandatory {
+.pfd-block-card.compact.mandatory {
   cursor: default;
   border-color: #059669;
   background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
 }
 
-.pfd-block-card.mandatory:hover {
-  transform: none;
+.pfd-block-card.compact.mandatory:hover {
   box-shadow: none;
 }
 
-/* Card top: icon + checkbox */
-.pfd-block-card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
 /* Block icon */
-.pfd-block-icon {
-  width: 42px;
-  height: 42px;
+.pfd-block-card.compact .pfd-block-icon {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-  border-radius: var(--radius-md);
-  padding: 8px;
+  border-radius: 5px;
+  padding: 4px;
   color: white;
 }
 
-.pfd-block-icon svg {
-  width: 26px;
-  height: 26px;
+.pfd-block-card.compact .pfd-block-icon svg {
+  width: 18px;
+  height: 18px;
   stroke: white;
 }
 
-.pfd-block-icon.mandatory {
+.pfd-block-card.compact .pfd-block-icon.mandatory {
   background: linear-gradient(135deg, #059669 0%, #10b981 100%);
 }
 
-/* Checkbox / lock */
-.pfd-block-check {
-  width: 24px;
-  height: 24px;
-  border-radius: 6px;
-  border: 2px solid var(--border-default);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s ease;
-  background: white;
-  flex-shrink: 0;
-}
-
-.pfd-block-check .check-icon {
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
-  display: none;
-}
-
-.pfd-block-check .lock-icon {
-  font-size: 12px;
-  display: none;
-}
-
-.pfd-block-check.checked {
-  background: var(--accent-color);
-  border-color: var(--accent-color);
-}
-
-.pfd-block-check.checked .check-icon {
-  display: block;
-}
-
-.pfd-block-check.locked {
-  background: #059669;
-  border-color: #059669;
-}
-
-.pfd-block-check.locked .lock-icon {
-  display: block;
-}
-
-.pfd-block-check.locked .check-icon {
-  display: none;
-}
-
 /* Card body */
-.pfd-block-card-body {
+.pfd-block-card.compact .pfd-block-card-body {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 1px;
 }
 
-.pfd-block-name {
-  font-size: 13px;
+.pfd-block-card.compact .pfd-block-name {
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-primary);
-  line-height: 1.3;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.pfd-block-card.mandatory .pfd-block-name {
+.pfd-block-card.compact.mandatory .pfd-block-name {
   color: #059669;
 }
 
 /* Badge */
 .pfd-block-badge {
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 10px;
+  padding: 1px 5px;
+  border-radius: 6px;
   display: inline-block;
   width: fit-content;
 }
@@ -204,19 +166,74 @@
   color: var(--text-secondary);
 }
 
-.pfd-block-card.selected .pfd-block-badge.optional {
+.pfd-block-card.compact.selected .pfd-block-badge.optional {
   background: #cffafe;
   color: var(--accent-color);
+}
+
+/* Checkbox / lock */
+.pfd-block-card.compact .pfd-block-check {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  background: white;
+}
+
+.pfd-block-card.compact .pfd-block-check .check-icon {
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  display: none;
+}
+
+.pfd-block-card.compact .pfd-block-check .lock-icon {
+  font-size: 9px;
+  display: none;
+}
+
+.pfd-block-card.compact .pfd-block-check.checked {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.pfd-block-card.compact .pfd-block-check.checked .check-icon {
+  display: block;
+}
+
+.pfd-block-card.compact .pfd-block-check.locked {
+  background: #059669;
+  border-color: #059669;
+}
+
+.pfd-block-card.compact .pfd-block-check.locked .lock-icon {
+  display: block;
+}
+
+.pfd-block-card.compact .pfd-block-check.locked .check-icon {
+  display: none;
+}
+
+/* Floating buttons positioned at bottom 5px */
+.pfd-grid-wrapper .floating-btn {
+  position: absolute;
+  bottom: -27px;
+  z-index: 100;
+}
+
+.pfd-floating-btn-right {
+  right: 10px;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
   .pfd-block-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 8px;
-  }
-
-  .pfd-block-card {
-    padding: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 4px;
   }
 }
