@@ -7,7 +7,6 @@ import { navigationService, Screen } from './services/navigation-service.js';
 import { catalogService } from './services/catalog-service.js';
 import { mockDataService } from './services/mock-data-service.js';
 import { Sidebar } from './components/sidebar.js';
-import { RevisionHeader } from './components/revision-header.js';
 import { DivisionSelectionScreen } from './screens/division-selection.js';
 import { ProductSelectionScreen } from './screens/product-selection.js';
 import { PfdBlockSelectionScreen } from './screens/pfd-block-selection.js';
@@ -17,7 +16,6 @@ import { BlockConfigurationScreen } from './screens/block-configuration.js';
 class App {
   constructor() {
     this._sidebar = new Sidebar();
-    this._revisionHeader = new RevisionHeader();
     this._currentScreen = null;
     this._contentEl = null;
     this._progressFill = null;
@@ -36,10 +34,6 @@ class App {
     // Render sidebar
     const sidebarEl = document.getElementById('sidebar');
     this._sidebar.render(sidebarEl);
-
-    // Render revision header
-    const revisionEl = document.getElementById('revision-section');
-    if (revisionEl) this._revisionHeader.render(revisionEl);
 
     // Header shrink on scroll (with debounce to prevent flicker)
     this._setupHeaderShrink();

@@ -210,9 +210,9 @@
 
 .checkbox-overlay-item .lock-icon {
   position: absolute;
-  bottom: 1px;
-  right: 1px;
-  font-size: 7px;
+  bottom: -2px;
+  right: -2px;
+  font-size: 12px;
   color: white;
   display: none;
   z-index: 2;
